@@ -11,4 +11,5 @@ public class IndividualMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_movie);
     }
+
 }
