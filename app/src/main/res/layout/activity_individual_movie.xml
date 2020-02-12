@@ -15,7 +15,7 @@
     </include>
 
     <TextView
-        android:id="@+id/textViewTitle"
+        android:id="@+id/cinivibeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="131dp"
@@ -36,5 +36,5 @@
         android:text="Go Back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/cinivibeTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
