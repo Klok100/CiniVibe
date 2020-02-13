@@ -4,10 +4,12 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
     <color name="background">#000000</color>
     <color name="textColor">#FFFFFF</color>
 
     <color name="gold">#FFD735</color>
     <color name="maroon">#C20B4B</color>
-
 </resources>

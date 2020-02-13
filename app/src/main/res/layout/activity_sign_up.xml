@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".SignUpActivity">
 
+    <include
+        android:id="@+id/actionBar"
+        layout="@layout/action_bar_signup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </include>
+
     <TextView
         android:id="@+id/textViewSignUp"
         android:layout_width="wrap_content"

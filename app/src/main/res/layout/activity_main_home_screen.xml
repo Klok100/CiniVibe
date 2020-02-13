@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainHomeScreenActivity">
 
+    <include
+        android:id="@+id/actionBar"
+        layout="@layout/action_bar_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </include>
+
     <TextView
         android:id="@+id/textViewMainHome"
         android:layout_width="wrap_content"
@@ -43,4 +51,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewMainHome" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginBottom="139dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonStreams"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMainHome"
+        app:layout_constraintVertical_bias="0.0">
+
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
