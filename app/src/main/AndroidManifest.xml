@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUp2Activity"></activity>
+        <activity android:name=".SignUp2Activity" />
         <activity android:name=".MovieTheatersListViewActivity" />
         <activity android:name=".StreamsListViewActivity" />
         <activity android:name=".TheatersListViewActivity" />
