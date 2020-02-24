@@ -31,7 +31,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 //    implementation 'androidx.cardview:cardview:1.0.0'
 
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+//    implementation 'com.android.support:recyclerview-v7:28.0.0'
 //    https://developer.android.com/guide/topics/ui/layout/recyclerview
+
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    // For control over item selection of both touch and mouse driven selection
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
 
 }
