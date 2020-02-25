@@ -10,7 +10,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class MainHomeScreenActivity extends AppCompatActivity {
+public class MainHomeScreenActivity extends AppCompatActivity implements CustomAdapter.OnMovieListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +18,18 @@ public class MainHomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_home_screen);
 
         ArrayList<MovieRecyclerView> items = new ArrayList<>();
-        CustomAdapter adapter = new CustomAdapter(this, items);
+        // passing onMovieListener interface to constructor of CustomAdapter
+        CustomAdapter adapter = new CustomAdapter(this, items, this);
         RecyclerView recyclerView = findViewById(R.id.streamingMoviesRecView);
 
+        // recyclerView fills with each individual movie in a horizontal layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
+
+        for (int i = 0; i < 10; i++) {
+            items.add(new MovieRecyclerView(R.drawable.cinivibe_logo, "Parasite"));
+            adapter.notifyDataSetChanged();
+        }
 
     }
 
@@ -33,6 +40,15 @@ public class MainHomeScreenActivity extends AppCompatActivity {
 
     public void moviesActivity(View v){
         Intent intent = new Intent(this, MoviesHomeActivity.class);
+        startActivity(intent);
+    }
+
+    // implemented method from class CustomAdapter to navigate to new activity
+    // passes movie from position sent
+    @Override
+    public void onMovieClick(int position) {
+        Intent intent = new Intent(this, IndividualMovieActivity.class);
+        // intent.putExtra("something", "something2");
         startActivity(intent);
     }
 }
