@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -20,18 +22,38 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         ArrayList<MovieRecyclerView> items = new ArrayList<>();
         // passing onMovieListener interface to constructor of CustomAdapter
         CustomAdapter adapter = new CustomAdapter(this, items, this);
-        RecyclerView recyclerView = findViewById(R.id.streamingMoviesRecView);
-
-        // recyclerView fills with each individual movie in a horizontal layout
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(adapter);
+        RecyclerView nowShowingRecyclerView = findViewById(R.id.nowShowingRecyclerView);
+        RecyclerView comingSoonRecyclerView = findViewById(R.id.comingSoonRecyclerView);
 
         for (int i = 0; i < 10; i++) {
             items.add(new MovieRecyclerView(R.drawable.cinivibe_logo, "Parasite"));
             adapter.notifyDataSetChanged();
         }
 
+        nowShowingRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+        nowShowingRecyclerView.setAdapter(adapter);
+        comingSoonRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+        comingSoonRecyclerView.setAdapter(adapter);
+
+
+        AdapterView.OnItemClickListener itemClickListener =
+                new AdapterView.OnItemClickListener(){
+                    public void onItemClick(AdapterView<?> listView,
+                                            View itemView, int position, long id){
+                        if (position == 0) {
+                            Intent intent = new Intent(MainHomeScreenActivity.this,
+                                    MoviesHomeActivity.class);
+                            startActivity(intent);
+                        }
+
+                    }
+                };
+        //Add the listener to the list View
+        ListView listView = (ListView) findViewById(R.id.listViewGenres);
+        listView.setOnItemClickListener(itemClickListener);
+
     }
+
 
     public void streamsActivity(View v) {
         Intent intent = new Intent(this, StreamsHomeActivity.class);

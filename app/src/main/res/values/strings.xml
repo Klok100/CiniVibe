@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CiniVibe</string>
+    <string-array name="Genres">
+        <item>Action</item>
+        <item>Romance</item>
+        <item>Horror</item>
+        <item>Comedy</item>
+        <item>Animation</item>
+    </string-array>
 </resources>
