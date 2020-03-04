@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 
-    <item android:id="@+id/nav_chat"
-        android:title="Chat"
-        android:icon="@drawable/ic_chat" />
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+
+    <item android:title="Movies">
+        <menu>
+            <item
+                android:id="@+id/nav_streaming"
+                android:icon="@drawable/ic_streaming"
+                android:title="Streaming" />
+
+            <item
+                android:id="@+id/nav_theater"
+                android:icon="@drawable/ic_theater"
+                android:title="Theater" />
+        </menu>
+    </item>
 
 </menu>
