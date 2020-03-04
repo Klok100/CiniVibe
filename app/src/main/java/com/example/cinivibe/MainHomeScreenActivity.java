@@ -40,11 +40,11 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
                 new AdapterView.OnItemClickListener(){
                     public void onItemClick(AdapterView<?> listView,
                                             View itemView, int position, long id){
-                        if (position == 0) {
+                        //if (position == 0) {
                             Intent intent = new Intent(MainHomeScreenActivity.this,
                                     MoviesHomeActivity.class);
                             startActivity(intent);
-                        }
+                        //}
 
                     }
                 };
@@ -62,6 +62,11 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
 
     public void moviesActivity(View v){
         Intent intent = new Intent(this, MoviesHomeActivity.class);
+        startActivity(intent);
+    }
+
+    public void mainHomeScreenActivity(View v) {
+        Intent intent = new Intent(this, MainHomeScreenActivity.class);
         startActivity(intent);
     }
 

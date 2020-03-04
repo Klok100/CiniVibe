@@ -28,6 +28,7 @@
             android:layout_width="59dp"
             android:layout_height="57dp"
             android:layout_marginTop="8dp"
+            android:onClick="mainHomeScreenActivity"
             app:layout_constraintEnd_toStartOf="@+id/searchButton"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/home_button" />
