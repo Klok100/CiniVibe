@@ -11,14 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class IndividualMovieActivity extends Fragment {
+public class IndividualMovieActivity extends AppCompatActivity {
 
-    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
-        return inflater.inflate(R.layout.activity_individual_movie, container, false);
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_individual_movie);
     }
 
 }

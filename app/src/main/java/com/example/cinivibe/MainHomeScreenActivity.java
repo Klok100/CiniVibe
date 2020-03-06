@@ -98,9 +98,9 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()){
             case R.id.nav_theater:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new IndividualMovieActivity()).commit();
-                break;
+                // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        // new IndividualMovieActivity()).commit();
+                // break;
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -120,11 +120,6 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         else{
             super.onBackPressed();
         }
-    }
-
-    public void onHomePressed(View v) {
-        Intent intent = new Intent(this, MainHomeScreenActivity.class);
-        startActivity(intent);
     }
 
 }
