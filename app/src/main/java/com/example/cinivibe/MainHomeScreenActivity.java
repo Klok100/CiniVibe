@@ -23,15 +23,17 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         RecyclerView recyclerView = findViewById(R.id.streamingMoviesRecView);
 
         // recyclerView fills with each individual movie in a horizontal layout
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             items.add(new MovieRecyclerView(R.drawable.cinivibe_logo, "Parasite"));
             adapter.notifyDataSetChanged();
         }
 
     }
+
+
 
     public void streamsActivity(View v) {
         Intent intent = new Intent(this, StreamsHomeActivity.class);
@@ -39,7 +41,7 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
     }
 
     public void moviesActivity(View v){
-        Intent intent = new Intent(this, MoviesHomeActivity.class);
+        Intent intent = new Intent(this, GridViewActivity.class);
         startActivity(intent);
     }
 
