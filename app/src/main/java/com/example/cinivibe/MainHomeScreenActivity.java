@@ -42,11 +42,11 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         ArrayList<MovieRecyclerView> items = new ArrayList<>();
         // passing onMovieListener interface to constructor of CustomAdapter
         CustomAdapter adapter = new CustomAdapter(this, items, this);
-        RecyclerView recyclerView = findViewById(R.id.streamingMoviesRecView);
+        //RecyclerView recyclerView = findViewById(R.id.streamingMoviesRecView);
 
         // recyclerView fills with each individual movie in a horizontal layout
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(adapter);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        //recyclerView.setAdapter(adapter);
         RecyclerView nowShowingRecyclerView = findViewById(R.id.nowShowingRecyclerView);
         RecyclerView comingSoonRecyclerView = findViewById(R.id.comingSoonRecyclerView);
 
