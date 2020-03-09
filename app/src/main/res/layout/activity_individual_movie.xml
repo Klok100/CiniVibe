@@ -6,6 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".IndividualMovieActivity">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="355dp"
+        android:layout_height="453dp"
+        android:layout_marginTop="104dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actionBar"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="87dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/back_button" />
+
+    <TextView
+        android:id="@+id/movieDescriptions"
+        android:layout_width="384dp"
+        android:layout_height="136dp"
+        android:layout_marginTop="52dp"
+        android:text="Description"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cinivibeTitle" />
+
+    <TextView
+        android:id="@+id/cinivibeTitle"
+        android:layout_width="339dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="48dp"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
     <include
         android:id="@+id/actionBar"
         layout="@layout/action_bar_main"
@@ -13,28 +59,4 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </include>
-
-    <TextView
-        android:id="@+id/cinivibeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="131dp"
-        android:layout_marginTop="98dp"
-        android:layout_marginEnd="131dp"
-        android:text="Individual Movie Screen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="384dp"
-        android:layout_marginEnd="162dp"
-        android:text="Go Back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cinivibeTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
