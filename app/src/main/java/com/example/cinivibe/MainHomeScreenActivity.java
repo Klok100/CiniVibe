@@ -20,7 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class MainHomeScreenActivity extends AppCompatActivity implements CustomAdapter.OnMovieListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainHomeScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Creates a global drawer object
     private DrawerLayout drawer;
@@ -39,38 +39,8 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ArrayList<MovieRecyclerView> items = new ArrayList<>();
-        // passing onMovieListener interface to constructor of CustomAdapter
-        CustomAdapter adapter = new CustomAdapter(this, items, this);
-        RecyclerView nowShowingRecyclerView = findViewById(R.id.nowShowingRecyclerView);
-        RecyclerView comingSoonRecyclerView = findViewById(R.id.comingSoonRecyclerView);
-
-        for (int i = 0; i < 10; i++) {
-            items.add(new MovieRecyclerView(R.drawable.cinivibe_logo, "Parasite"));
-            adapter.notifyDataSetChanged();
-        }
-
-        nowShowingRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
-        nowShowingRecyclerView.setAdapter(adapter);
-        comingSoonRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
-        comingSoonRecyclerView.setAdapter(adapter);
-
-
-        AdapterView.OnItemClickListener itemClickListener =
-                new AdapterView.OnItemClickListener(){
-                    public void onItemClick(AdapterView<?> listView,
-                                            View itemView, int position, long id){
-                        //if (position == 0) {
-                            Intent intent = new Intent(MainHomeScreenActivity.this,
-                                    MoviesHomeActivity.class);
-                            startActivity(intent);
-                        //}
-
-                    }
-                };
-        //Add the listener to the list View
-        ListView listView = (ListView) findViewById(R.id.listViewGenres);
-        listView.setOnItemClickListener(itemClickListener);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new MainHomeScreenFragment()).commit();
 
     }
 
@@ -85,22 +55,13 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         startActivity(intent);
     }
 
-    // implemented method from class CustomAdapter to navigate to new activity
-    // passes movie from position sent
-    @Override
-    public void onMovieClick(int position) {
-        Intent intent = new Intent(this, IndividualMovieActivity.class);
-        // intent.putExtra("something", "something2");
-        startActivity(intent);
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()){
             case R.id.nav_theater:
-                // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        // new IndividualMovieActivity()).commit();
-                // break;
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new IndividualMovieFragment()).commit();
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

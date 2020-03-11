@@ -5,156 +5,81 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainHomeScreenActivity">
+    tools:context=".MainHomeScreenActivity"
+    tools:openDrawer="start">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="4dp"
+            android:background="@color/black" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="100dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="147dp"
+                    android:layout_marginEnd="148dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/cinivibe_logo" />
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/three_lines"
+                    android:onClick="onOpenPressed"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/imageButton6"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/home_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButton7"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/imageButton7"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/search_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <FrameLayout
-                android:id="@+id/replace_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </FrameLayout>
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+            android:layout_height="match_parent" />
 
 
-                        <ListView
-                            android:id="@+id/listViewGenres"
-                            android:layout_width="531dp"
-                            android:layout_height="212dp"
-                            android:layout_marginTop="68dp"
-                            android:entries="@array/Genres"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
-                        <TextView
-                            android:id="@+id/nowShowingMoviesTitle"
-                            android:layout_width="214dp"
-                            android:layout_height="24dp"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginTop="40dp"
-                            android:text="NOW SHOWING"
-                            android:textSize="20sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/actionBar" />
-
-                        <TextView
-                            android:id="@+id/comingSoonMoviesTitle"
-                            android:layout_width="214dp"
-                            android:layout_height="24dp"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginTop="96dp"
-                            android:text="COMING SOON"
-                            android:textSize="20sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/nowShowingRecyclerView" />
-
-                        <TextView
-                            android:id="@+id/seeAllNowShowing"
-                            android:layout_width="80dp"
-                            android:layout_height="24dp"
-                            android:layout_marginTop="40dp"
-                            android:layout_marginEnd="36dp"
-                            android:onClick="moviesActivity"
-                            android:text="SEE ALL"
-                            android:textSize="20sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/actionBar" />
-
-                        <TextView
-                            android:id="@+id/seeAllComingSoon"
-                            android:layout_width="80dp"
-                            android:layout_height="24dp"
-                            android:layout_marginTop="96dp"
-                            android:layout_marginEnd="38dp"
-                            android:text="SEE ALL"
-                            android:textSize="20sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/nowShowingRecyclerView" />
-
-                        <TextView
-                            android:id="@+id/genresTitle"
-                            android:layout_width="100dp"
-                            android:layout_height="24dp"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginTop="36dp"
-                            android:text="GENRES"
-                            android:textSize="20sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
-                        <View
-                            android:id="@+id/divider"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="53dp"
-                            android:background="?android:attr/listDivider"
-                            app:layout_constraintBottom_toTopOf="@+id/comingSoonRecyclerView"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/nowShowingRecyclerView"
-                            app:layout_constraintVertical_bias="0.09" />
-
-                        <View
-                            android:id="@+id/divider2"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="56dp"
-                            android:background="?android:attr/listDivider"
-                            app:layout_constraintTop_toBottomOf="@+id/comingSoonRecyclerView"
-                            tools:layout_editor_absoluteX="0dp" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/nowShowingRecyclerView"
-                            android:layout_width="531dp"
-                            android:layout_height="212dp"
-                            android:layout_marginTop="72dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/actionBar" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/comingSoonRecyclerView"
-                            android:layout_width="531dp"
-                            android:layout_height="212dp"
-                            android:layout_marginTop="128dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.457"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/nowShowingRecyclerView" />
-
-                        <include
-                            android:id="@+id/actionBar"
-                            layout="@layout/action_bar_main"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                        </include>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </ScrollView>
-
-
-
-        </FrameLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
