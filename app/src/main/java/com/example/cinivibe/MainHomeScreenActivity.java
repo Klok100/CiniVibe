@@ -20,7 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class MainHomeScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainHomeScreenActivity extends AppCompatActivity implements CustomAdapter.OnMovieListener, NavigationView.OnNavigationItemSelectedListener {
 
     // Creates a global drawer object
     private DrawerLayout drawer;
@@ -30,7 +30,7 @@ public class MainHomeScreenActivity extends AppCompatActivity implements Navigat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_screen);
 
-        // Gets the custom Drawer 
+        // Gets the custom Drawer
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -55,13 +55,22 @@ public class MainHomeScreenActivity extends AppCompatActivity implements Navigat
         startActivity(intent);
     }
 
+    // implemented method from class CustomAdapter to navigate to new activity
+    // passes movie from position sent
+    @Override
+    public void onMovieClick(int position) {
+        Intent intent = new Intent(this, IndividualMovieActivity.class);
+        // intent.putExtra("something", "something2");
+        startActivity(intent);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()){
             case R.id.nav_theater:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new IndividualMovieFragment()).commit();
-                break;
+                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                         new IndividualMovieFragment()).commit();
+                 break;
         }
 
         drawer.closeDrawer(GravityCompat.START);
