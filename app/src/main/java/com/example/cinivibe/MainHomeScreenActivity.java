@@ -51,7 +51,7 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
     }
 
     public void moviesActivity(View v){
-        Intent intent = new Intent(this, MoviesHomeActivity.class);
+        Intent intent = new Intent(this, GridViewActivity.class);
         startActivity(intent);
     }
 
