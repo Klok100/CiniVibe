@@ -14,4 +14,4 @@ public class MovieRecyclerView {
         return title;
     }
 
-    }
+}

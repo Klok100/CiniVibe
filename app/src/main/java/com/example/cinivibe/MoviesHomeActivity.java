@@ -15,7 +15,7 @@ public class MoviesHomeActivity extends AppCompatActivity {
     }
 
     public void moviesListView(View v){
-        Intent intent = new Intent(this, MovieTheatersListViewActivity.class);
+        Intent intent = new Intent(this, GridViewActivity.class);
         startActivity(intent);
     }
 

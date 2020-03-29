@@ -16,6 +16,8 @@
         <activity android:name=".IndividualMovieActivity" />
         <activity android:name=".StreamsHomeActivity" />
         <activity android:name=".MoviesHomeActivity" />
+        <activity android:name=".GridViewActivity"/>
+
         <activity android:name=".MainHomeScreenActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity">
