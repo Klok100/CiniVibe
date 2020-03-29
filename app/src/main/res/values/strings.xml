@@ -9,4 +9,13 @@
         <item>Comedy</item>
         <item>Animation</item>
     </string-array>
+
+    <string-array name="Theaters">
+        <item>AMC Loews Streets of Woodfield</item>
+        <item>AMC South Barrington</item>
+        <item>Century 16 Deer Park</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

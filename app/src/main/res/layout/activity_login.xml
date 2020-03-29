@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@color/black">
 
     <Button
         android:id="@+id/loginButton"
@@ -18,10 +19,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEnter" />
 
     <EditText
-        android:id="@+id/usernameLogin"
+        android:id="@+id/firstNameEnter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -38,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cinivibeTitle" />
 
     <EditText
-        android:id="@+id/passwordLogin"
+        android:id="@+id/passwordEnter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -52,10 +53,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/firstNameEnter" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ciniVibeLogo"
         android:layout_width="132dp"
         android:layout_height="119dp"
         android:layout_marginTop="348dp"
@@ -70,8 +71,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="CREATE AN ACCOUNT"
         android:onClick="signUp"
+        android:text="CREATE AN ACCOUNT"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

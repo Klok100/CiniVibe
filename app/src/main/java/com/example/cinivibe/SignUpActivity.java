@@ -14,8 +14,15 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
     }
 
-    public void continueSignUp(View v){
+    // Proceeds to the Main Home Screen
+    public void signUp(View v){
         Intent intent = new Intent(this, MainHomeScreenActivity.class);
+        startActivity(intent);
+    }
+
+    // Goes back to the Login Page
+    public void backToLogin(View v) {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

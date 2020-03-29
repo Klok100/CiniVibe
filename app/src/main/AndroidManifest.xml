@@ -9,15 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUp2Activity" />
-        <activity android:name=".MovieTheatersListViewActivity" />
-        <activity android:name=".StreamsListViewActivity" />
-        <activity android:name=".TheatersListViewActivity" />
-        <activity android:name=".IndividualMovieActivity" />
-        <activity android:name=".StreamsHomeActivity" />
-        <activity android:name=".MoviesHomeActivity" />
-        <activity android:name=".GridViewActivity"/>
-
         <activity android:name=".MainHomeScreenActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity">

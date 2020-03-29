@@ -13,7 +13,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
-    //jess
+
 
     public void login(View v){
         Intent intent = new Intent(this, MainHomeScreenActivity.class);

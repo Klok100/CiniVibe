@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".IndividualMovieActivity">
+    android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/movieImage"
         android:layout_width="355dp"
         android:layout_height="453dp"
         android:layout_marginTop="104dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actionBar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/backButton"
         android:layout_width="87dp"
         android:layout_height="88dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
+        android:onClick="onBackButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/back_button" />
@@ -50,6 +50,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/movieImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
