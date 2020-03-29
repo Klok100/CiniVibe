@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:id="@+id/nav_theater"
-        android:title="Chat"
-        android:icon="@drawable/ic_theater" />
+    <group>
+        <item android:id="@+id/nav_favorites"
+            android:title="Favorites" />
+        <item android:id="@+id/nav_wishlist"
+            android:title="Wishlist" />
+        <item android:id="@+id/nav_completed"
+            android:title="Completed" />
+    </group>
 
 </menu>

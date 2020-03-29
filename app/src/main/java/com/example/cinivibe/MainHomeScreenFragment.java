@@ -11,6 +11,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,13 +46,13 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         comingSoonRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL, false));
         comingSoonRecyclerView.setAdapter(adapter);
 
-
+        // OnClickListener for the list of genres
         AdapterView.OnItemClickListener itemClickListener =
                 new AdapterView.OnItemClickListener(){
                     public void onItemClick(AdapterView<?> listView,
                                             View itemView, int position, long id){
                         //if (position == 0) {
-                        IndividualMovieFragment nextFrag = new IndividualMovieFragment();
+                        GridViewFragment nextFrag = new GridViewFragment();
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, nextFrag, "findThisFragment")
                                 .addToBackStack(null)
@@ -70,6 +71,15 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
     @Override
     public void onMovieClick(int position) {
         IndividualMovieFragment nextFrag = new IndividualMovieFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+    public void onHomeClick(){
+        MainHomeScreenFragment nextFrag = new MainHomeScreenFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, nextFrag, "findThisFragment")
                 .addToBackStack(null)

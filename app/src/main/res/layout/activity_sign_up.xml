@@ -4,39 +4,330 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".SignUpActivity">
 
-    <include
-        android:id="@+id/actionBar"
-        layout="@layout/action_bar_signup"
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="198dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="301dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="301dp"
+        android:background="@drawable/login_button"
+        android:onClick="signUp"
+        android:text="SIGN UP"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/genreBox" />
 
-    </include>
+    <CheckBox
+        android:id="@+id/comedyCheck"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="37dp"
+        android:background="@drawable/border"
+        android:buttonTint="@color/white"
+        android:focusable="auto"
+        android:outlineAmbientShadowColor="#FFFFFF"
+        android:outlineSpotShadowColor="#FFFFFF"
+        android:text="Comedy"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/genreBox"
+        app:layout_constraintTop_toBottomOf="@+id/romanceCheck" />
+
+    <CheckBox
+        android:id="@+id/animeCheck"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="138dp"
+        android:layout_marginBottom="37dp"
+        android:background="@drawable/border"
+        android:buttonTint="@color/white"
+        android:focusable="auto"
+        android:outlineAmbientShadowColor="#FFFFFF"
+        android:outlineSpotShadowColor="#FFFFFF"
+        android:text="Animation"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/genreBox"
+        app:layout_constraintEnd_toEndOf="@+id/genreBox" />
+
+    <CheckBox
+        android:id="@+id/horrorCheck"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/border"
+        android:buttonTint="@color/white"
+        android:focusable="auto"
+        android:outlineAmbientShadowColor="#FFFFFF"
+        android:outlineSpotShadowColor="#FFFFFF"
+        android:text="Horror"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/genreBox"
+        app:layout_constraintTop_toBottomOf="@+id/actionCheck" />
 
     <TextView
-        android:id="@+id/textViewSignUp"
+        android:id="@+id/passwordText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="175dp"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="Password"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/passwordEnter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameText" />
+
+    <TextView
+        android:id="@+id/firstNameText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="First Name"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/firstNameEnter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoHeader" />
+
+    <TextView
+        android:id="@+id/lastNameText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="175dp"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="Last Name"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/lastNameEnter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameText" />
+
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="175dp"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="Email"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/emailEnter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameText" />
+
+    <EditText
+        android:id="@+id/emailEnter"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="175dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="Required"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColorHint="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/emailText"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameEnter" />
+
+    <EditText
+        android:id="@+id/usernameEnter"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="175dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="Required"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColorHint="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/usernameText"
+        app:layout_constraintTop_toBottomOf="@+id/emailEnter" />
+
+    <EditText
+        android:id="@+id/lastNameEnter"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="175dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="Required"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColorHint="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lastNameText"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameEnter" />
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="69dp"
+        android:layout_height="62dp"
+        android:onClick="backToLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_button" />
+
+    <TextView
+        android:id="@+id/signUpTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="181dp"
-        android:layout_marginTop="90dp"
-        android:layout_marginEnd="182dp"
-        android:text="Sign Up"
+        android:layout_marginTop="8dp"
+        android:text="CREATE AN ACCOUNT"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/continueButton"
+    <EditText
+        android:id="@+id/firstNameEnter"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="175dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="Required"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColorHint="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/firstNameText"
+        app:layout_constraintTop_toBottomOf="@+id/infoHeader" />
+
+    <TextView
+        android:id="@+id/usernameText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="175dp"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="Username"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/usernameEnter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+
+    <EditText
+        android:id="@+id/passwordEnter"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="175dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="At least 6 Characters"
+        android:inputType="textPassword"
+
+        android:textAlignment="center"
+        android:textColorHint="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/passwordText"
+        app:layout_constraintTop_toBottomOf="@+id/usernameEnter" />
+
+    <CheckBox
+        android:id="@+id/actionCheck"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/border"
+        android:buttonTint="@color/white"
+        android:focusable="auto"
+        android:outlineAmbientShadowColor="#FFFFFF"
+        android:outlineSpotShadowColor="#FFFFFF"
+        android:text="Action"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/genreBox"
+        app:layout_constraintTop_toTopOf="@+id/genreBox" />
+
+    <CheckBox
+        android:id="@+id/romanceCheck"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="37dp"
+        android:background="@drawable/border"
+        android:buttonTint="@color/white"
+        android:focusable="auto"
+        android:outlineAmbientShadowColor="#FFFFFF"
+        android:outlineSpotShadowColor="#FFFFFF"
+        android:text="Romance"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/genreBox"
+        app:layout_constraintTop_toTopOf="@+id/genreBox" />
+
+    <View
+        android:id="@+id/genreBox"
+        android:layout_width="450dp"
+        android:layout_height="274dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="175dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genreHeader" />
+
+    <TextView
+        android:id="@+id/infoHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="159dp"
-        android:onClick="continueSignUp"
-        android:text="Continue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="100dp"
+        android:text="BASIC INFORMATION:"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSignUp" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpTitle" />
+
+    <TextView
+        android:id="@+id/genreHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="100dp"
+        android:text="FAVORITE GENRES:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
