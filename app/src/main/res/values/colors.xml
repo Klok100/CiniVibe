@@ -9,6 +9,7 @@
     <color name="black">#000000</color>
 
 
-    <color name="gold">#FFD735</color>
+    <color name="gold">#FFBF2B</color>
     <color name="maroon">#A0042B</color>
+    <color name="popUpShadow">#800322</color>
 </resources>
