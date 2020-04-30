@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -62,6 +63,7 @@ public class MainHomeScreenActivity extends AppCompatActivity
         // Gets the custom Drawer
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        hideItem(extraMenuNames,navigationView);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -100,6 +102,7 @@ public class MainHomeScreenActivity extends AppCompatActivity
             for (int i = 0; i < arrPackageData.size(); i++) {
                 extraMenuNames.set(i, arrPackageData.get(i));
             }
+            extraMenuNames.remove(0);
         }
 
     }
@@ -148,10 +151,11 @@ public class MainHomeScreenActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new GridViewFragment()).commit();
                 break;
-
-            case R.id.nav_completed:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new GridViewFragment()).commit();
+            case R.id.extra1SideMenu:
+                break;
+            case R.id.extra2SideMenu:
+                break;
+            case R.id.extra3SideMenu:
                 break;
         }
 
@@ -178,6 +182,32 @@ public class MainHomeScreenActivity extends AppCompatActivity
 
     public static SharedPreferences getSharedPreferences() {
         return sharedPreferences;
+    }
+
+    public void hideItem(ArrayList<String> extraMenuNames, NavigationView navigationView) {
+        Menu nav_Menu = navigationView.getMenu();
+        if (extraMenuNames.isEmpty()) {
+            nav_Menu.findItem(R.id.extra1SideMenu).setVisible(false);
+            nav_Menu.findItem(R.id.extra2SideMenu).setVisible(false);
+            nav_Menu.findItem(R.id.extra3SideMenu).setVisible(false);
+        }
+        else {
+            if (extraMenuNames.size() == 1){
+                nav_Menu.findItem(R.id.extra1SideMenu).setTitle(extraMenuNames.get(0));
+                nav_Menu.findItem(R.id.extra2SideMenu).setVisible(false);
+                nav_Menu.findItem(R.id.extra3SideMenu).setVisible(false);
+            }
+            else if (extraMenuNames.size() == 2) {
+                nav_Menu.findItem(R.id.extra1SideMenu).setTitle(extraMenuNames.get(0));
+                nav_Menu.findItem(R.id.extra2SideMenu).setTitle(extraMenuNames.get(1));
+                nav_Menu.findItem(R.id.extra3SideMenu).setVisible(false);
+            }
+            else {
+                nav_Menu.findItem(R.id.extra1SideMenu).setTitle(extraMenuNames.get(0));
+                nav_Menu.findItem(R.id.extra2SideMenu).setTitle(extraMenuNames.get(1));
+                nav_Menu.findItem(R.id.extra3SideMenu).setTitle(extraMenuNames.get(2));
+            }
+        }
     }
 
 }

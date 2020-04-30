@@ -96,25 +96,25 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
     public void hideItem(ArrayList<String> extraMenuNames, NavigationView navigationView) {
         Menu nav_Menu = navigationView.getMenu();
         if (extraMenuNames.isEmpty()) {
-            nav_Menu.findItem(R.id.extra1Menu).setVisible(false);
-            nav_Menu.findItem(R.id.extra2Menu).setVisible(false);
-            nav_Menu.findItem(R.id.extra3Menu).setVisible(false);
+            nav_Menu.findItem(R.id.extra1BottomMenu).setVisible(false);
+            nav_Menu.findItem(R.id.extra2BottomMenu).setVisible(false);
+            nav_Menu.findItem(R.id.extra3BottomMenu).setVisible(false);
         }
         else {
             if (extraMenuNames.size() == 1){
-                nav_Menu.findItem(R.id.extra1Menu).setTitle(extraMenuNames.get(0));
-                nav_Menu.findItem(R.id.extra2Menu).setVisible(false);
-                nav_Menu.findItem(R.id.extra3Menu).setVisible(false);
+                nav_Menu.findItem(R.id.extra1BottomMenu).setTitle(extraMenuNames.get(0));
+                nav_Menu.findItem(R.id.extra2BottomMenu).setVisible(false);
+                nav_Menu.findItem(R.id.extra3BottomMenu).setVisible(false);
             }
             else if (extraMenuNames.size() == 2) {
-                nav_Menu.findItem(R.id.extra1Menu).setTitle(extraMenuNames.get(0));
-                nav_Menu.findItem(R.id.extra2Menu).setTitle(extraMenuNames.get(1));
-                nav_Menu.findItem(R.id.extra3Menu).setVisible(false);
+                nav_Menu.findItem(R.id.extra1BottomMenu).setTitle(extraMenuNames.get(0));
+                nav_Menu.findItem(R.id.extra2BottomMenu).setTitle(extraMenuNames.get(1));
+                nav_Menu.findItem(R.id.extra3BottomMenu).setVisible(false);
             }
             else {
-                nav_Menu.findItem(R.id.extra1Menu).setTitle(extraMenuNames.get(0));
-                nav_Menu.findItem(R.id.extra2Menu).setTitle(extraMenuNames.get(1));
-                nav_Menu.findItem(R.id.extra3Menu).setTitle(extraMenuNames.get(2));
+                nav_Menu.findItem(R.id.extra1BottomMenu).setTitle(extraMenuNames.get(0));
+                nav_Menu.findItem(R.id.extra2BottomMenu).setTitle(extraMenuNames.get(1));
+                nav_Menu.findItem(R.id.extra3BottomMenu).setTitle(extraMenuNames.get(2));
             }
         }
     }
@@ -138,7 +138,6 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
             Type type = new TypeToken<List<String>>() {
             }.getType();
             extraMenuNames = gson.fromJson(json, type);
-            extraMenuNames.remove(0);
         }
 
     }

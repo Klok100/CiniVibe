@@ -8,13 +8,13 @@
         android:id="@+id/wishlistMenu"
         android:title="WISHLIST" />
     <item
-        android:id="@+id/extra1Menu"
+        android:id="@+id/extra1BottomMenu"
         android:title="extra" />
     <item
-        android:id="@+id/extra2Menu"
+        android:id="@+id/extra2BottomMenu"
         android:title="extra" />
     <item
-        android:id="@+id/extra3Menu"
+        android:id="@+id/extra3BottomMenu"
         android:title="extra" />
     <item
         android:id="@+id/addMenu"
