@@ -52,4 +52,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movieImage" />
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_gravity="bottom|end"
+            android:clickable="true"
+            android:onClick="onFabClick"
+            app:backgroundTint="@android:color/transparent"
+            app:maxImageSize="60dp"
+            app:srcCompat="@drawable/save_to_collection_icon" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

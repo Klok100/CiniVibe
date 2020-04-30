@@ -87,7 +87,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/profile_header"
-        app:menu="@menu/drawer_menu"
+        app:menu="@menu/side_drawer_menu"
         app:itemTextColor="@color/white"
         android:background="@color/black"/>
 

@@ -36,7 +36,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         RecyclerView nowShowingRecyclerView = view.findViewById(R.id.nowShowingRecyclerView);
         RecyclerView comingSoonRecyclerView = view.findViewById(R.id.comingSoonRecyclerView);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             items.add(new MovieRecyclerView(R.drawable.cinivibe_logo, "Parasite"));
             adapter.notifyDataSetChanged();
         }

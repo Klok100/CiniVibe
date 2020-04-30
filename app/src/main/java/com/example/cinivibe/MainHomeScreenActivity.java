@@ -6,30 +6,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainHomeScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainHomeScreenActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     // Creates a global drawer object
     private DrawerLayout drawer;
+    public static final String EXTRA_NAME = "name";
+    public static ArrayList<String> extraMenuNames;
+    public IndividualMovieFragment individualMovieFragment;
+    public static SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_screen);
+
+        individualMovieFragment = new IndividualMovieFragment();
+        sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        loadArraylist();
+        updateArraylist();
 
         // Creates a Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -59,10 +69,54 @@ public class MainHomeScreenActivity extends AppCompatActivity implements Navigat
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Fills the fragment container with the Main Home Screen Fragment at the start of this activity
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new MainHomeScreenFragment()).commit();
+        if (getIntent().getStringExtra("individualMovieFrag") != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    individualMovieFragment).commit();
+        }
+        else {
+            // Fills the fragment container with the Main Home Screen Fragment at the start of this activity
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new MainHomeScreenFragment()).commit();
+        }
+    }
 
+    public void loadArraylist() {
+
+        if (extraMenuNames == null) {
+            extraMenuNames = new ArrayList<>();
+            sharedPreferences.edit().clear().apply();
+        }
+
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("Set", "");
+
+
+        if (json.isEmpty()) {
+            Toast.makeText(MainHomeScreenActivity.this,"There is something wrong",Toast.LENGTH_LONG).show();
+        } else {
+            Type type = new TypeToken<List<String>>() {
+            }.getType();
+            List<String> arrPackageData = gson.fromJson(json, type);
+            for (int i = 0; i < arrPackageData.size(); i++) {
+                extraMenuNames.set(i, arrPackageData.get(i));
+            }
+        }
+
+    }
+
+    public void updateArraylist() {
+
+
+        extraMenuNames.add(getIntent().getStringExtra(this.EXTRA_NAME));
+        Gson gson = new Gson();
+        String json = gson.toJson(extraMenuNames);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Set",json );
+        editor.commit();
+
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("extraMenuNames", extraMenuNames);
+        individualMovieFragment.setArguments(bundle);
     }
 
     // Replaces the fragment container with the Grid View Fragment, when the See All button is pressed
@@ -120,6 +174,10 @@ public class MainHomeScreenActivity extends AppCompatActivity implements Navigat
         else{
             super.onBackPressed();
         }
+    }
+
+    public static SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
     }
 
 }

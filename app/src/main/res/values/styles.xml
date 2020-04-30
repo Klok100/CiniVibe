@@ -13,4 +13,10 @@
 
     </style>
 
+    <style name="AppTheme.PopUp" >
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
 </resources>

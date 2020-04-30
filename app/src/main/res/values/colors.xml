@@ -12,4 +12,9 @@
     <color name="gold">#FFBF2B</color>
     <color name="maroon">#A0042B</color>
     <color name="popUpShadow">#800322</color>
+
+    <color name="darkGold">#C09020</color>
+    <color name="transparent">#80000000</color>
+    <color name="transparentGold">#80FFBF2B</color>
+
 </resources>
