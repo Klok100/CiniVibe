@@ -7,7 +7,7 @@
         <item>Romance</item>
         <item>Horror</item>
         <item>Comedy</item>
-        <item>Animation</item>
+        <item>Sci-Fi</item>
     </string-array>
 
     <string-array name="Theaters">

@@ -11,8 +11,10 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,22 +24,12 @@
             <ListView
                 android:id="@+id/listViewGenres"
                 android:layout_width="531dp"
-                android:layout_height="212dp"
+                android:layout_height="350dp"
                 android:layout_marginTop="68dp"
                 android:entries="@array/Genres"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
-            <ListView
-                android:id="@+id/listViewTheaters"
-                android:layout_width="531dp"
-                android:layout_height="212dp"
-                android:layout_marginTop="68dp"
-                android:entries="@array/Theaters"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/listViewGenres" />
 
             <TextView
                 android:id="@+id/nowShowingMoviesTitle"
@@ -96,17 +88,6 @@
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
-            <TextView
-                android:id="@+id/TheatersTitle"
-                android:layout_width="100dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="36dp"
-                android:text="GENRES"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/listViewGenres" />
 
             <View
                 android:id="@+id/divider"
