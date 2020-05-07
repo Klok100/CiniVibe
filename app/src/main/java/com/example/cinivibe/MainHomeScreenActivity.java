@@ -31,6 +31,7 @@ public class MainHomeScreenActivity extends AppCompatActivity
     public static ArrayList<String> extraMenuNames;
     public IndividualMovieFragment individualMovieFragment;
     public static SharedPreferences sharedPreferences;
+    public NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +63,8 @@ public class MainHomeScreenActivity extends AppCompatActivity
 
         // Gets the custom Drawer
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        hideItem(extraMenuNames,navigationView);
+        navigationView = findViewById(R.id.nav_view);
+        hideItem(extraMenuNames);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -102,7 +103,6 @@ public class MainHomeScreenActivity extends AppCompatActivity
             for (int i = 0; i < arrPackageData.size(); i++) {
                 extraMenuNames.set(i, arrPackageData.get(i));
             }
-            extraMenuNames.remove(0);
         }
 
     }
@@ -117,9 +117,6 @@ public class MainHomeScreenActivity extends AppCompatActivity
         editor.putString("Set",json );
         editor.commit();
 
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList("extraMenuNames", extraMenuNames);
-        individualMovieFragment.setArguments(bundle);
     }
 
     // Replaces the fragment container with the Grid View Fragment, when the See All button is pressed
@@ -151,7 +148,10 @@ public class MainHomeScreenActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new GridViewFragment()).commit();
                 break;
-            case R.id.extra1SideMenu:
+            case R.id.extra1SideMenu: {
+                Bundle bundle = new Bundle();
+                bundle.putString("collectionName",navigationView.getMenu().getItem(R.id.extra1SideMenu).toString());
+            }
                 break;
             case R.id.extra2SideMenu:
                 break;
@@ -184,7 +184,7 @@ public class MainHomeScreenActivity extends AppCompatActivity
         return sharedPreferences;
     }
 
-    public void hideItem(ArrayList<String> extraMenuNames, NavigationView navigationView) {
+    public void hideItem(ArrayList<String> extraMenuNames) {
         Menu nav_Menu = navigationView.getMenu();
         if (extraMenuNames.isEmpty()) {
             nav_Menu.findItem(R.id.extra1SideMenu).setVisible(false);

@@ -138,6 +138,7 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
             Type type = new TypeToken<List<String>>() {
             }.getType();
             extraMenuNames = gson.fromJson(json, type);
+            extraMenuNames.remove(0);
         }
 
     }
