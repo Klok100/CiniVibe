@@ -10,10 +10,11 @@
         <item>Sci-Fi</item>
     </string-array>
 
-    <string-array name="Theaters">
-        <item>AMC Loews Streets of Woodfield</item>
-        <item>AMC South Barrington</item>
-        <item>Century 16 Deer Park</item>
+    <string-array name="Sorting">
+        <item>Click to Sort By</item>
+        <item>Sort from A-Z</item>
+        <item>Sort by Rating</item>
+        <item>Sort by Release Date</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

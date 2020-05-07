@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".CustomPopupActivity"
+            android:theme="@style/AppTheme.PopUp"
+        ></activity>
+        <activity android:name=".BottomNavDrawerFragment" />
         <activity android:name=".MainHomeScreenActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity">

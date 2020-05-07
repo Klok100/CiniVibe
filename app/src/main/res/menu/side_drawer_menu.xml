@@ -8,8 +8,12 @@
             android:title="Favorites" />
         <item android:id="@+id/nav_wishlist"
             android:title="Wishlist" />
-        <item android:id="@+id/nav_completed"
-            android:title="Completed" />
+        <item android:id="@+id/extra1SideMenu"
+            android:title="extra" />
+        <item android:id="@+id/extra2SideMenu"
+            android:title="extra" />
+        <item android:id="@+id/extra3SideMenu"
+            android:title="extra" />
     </group>
 
 </menu>

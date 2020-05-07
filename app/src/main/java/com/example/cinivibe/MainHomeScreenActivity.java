@@ -3,64 +3,47 @@ package com.example.cinivibe;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Toast;
-
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainHomeScreenActivity extends AppCompatActivity implements CustomAdapter.OnMovieListener, NavigationView.OnNavigationItemSelectedListener {
 
     // Creates a global drawer object
     private DrawerLayout drawer;
     private CustomAdapter adapter;
+    public static final String EXTRA_NAME = "name";
+    public static ArrayList<String> extraMenuNames;
+    public IndividualMovieFragment individualMovieFragment;
+    public static SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_screen);
 
-        // Creates a Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        // Adds the OnClickListener for the Home Button
-        toolbar.findViewById(R.id.home_button).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new MainHomeScreenFragment()).commit();
-            }
-        });
-
-        // Adds the OnClickListener for the Search Button
-        //toolbar.findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener(){
-        //    public void onClick(View v){
-
-        //    }
-        //});
+        individualMovieFragment = new IndividualMovieFragment();
+        sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        loadArraylist();
+        updateArraylist();
 
         // Gets the custom Drawer
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        hideItem(extraMenuNames,navigationView);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -68,10 +51,56 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Fills the fragment container with the Main Home Screen Fragment at the start of this activity
+        if (getIntent().getStringExtra("individualMovieFrag") != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    individualMovieFragment).commit();
+        }
+        else {
+            // Fills the fragment container with the Main Home Screen Fragment at the start of this activity
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new MainHomeScreenFragment()).commit();
+        }
+    }
+
+    public void loadArraylist() {
+
+        if (extraMenuNames == null) {
+            extraMenuNames = new ArrayList<>();
+            sharedPreferences.edit().clear().apply();
+        }
+
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("Set", "");
+
+
+        if (json.isEmpty()) {
+            Toast.makeText(MainHomeScreenActivity.this,"There is something wrong",Toast.LENGTH_LONG).show();
+        } else {
+            Type type = new TypeToken<List<String>>() {
+            }.getType();
+            List<String> arrPackageData = gson.fromJson(json, type);
+            for (int i = 0; i < arrPackageData.size(); i++) {
+                extraMenuNames.set(i, arrPackageData.get(i));
+            }
+        }
+
+    }
+
+    public void updateArraylist() {
+
+
+        extraMenuNames.add(getIntent().getStringExtra(this.EXTRA_NAME));
+        Gson gson = new Gson();
+        String json = gson.toJson(extraMenuNames);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Set",json);
+        editor.commit();
+
+    }
+
+    public void onHomeClick(View v){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new MainHomeScreenFragment()).commit();
-
     }
 
     // Replaces the fragment container with the Grid View Fragment, when the See All button is pressed
@@ -104,9 +133,13 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
                         new GridViewFragment()).commit();
                 break;
 
-            case R.id.nav_completed:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new GridViewFragment()).commit();
+            case R.id.extra1SideMenu:
+                break;
+
+            case R.id.extra2SideMenu:
+                break;
+
+            case R.id.extra3SideMenu:
                 break;
         }
 
@@ -154,5 +187,35 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
 
     }
 
+
+    public static SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
+    public void hideItem(ArrayList<String> extraMenuNames, NavigationView navigationView) {
+        Menu nav_Menu = navigationView.getMenu();
+        if (extraMenuNames.isEmpty()) {
+            nav_Menu.findItem(R.id.extra1SideMenu).setVisible(false);
+            nav_Menu.findItem(R.id.extra2SideMenu).setVisible(false);
+            nav_Menu.findItem(R.id.extra3SideMenu).setVisible(false);
+        }
+        else {
+            if (extraMenuNames.size() == 1){
+                nav_Menu.findItem(R.id.extra1SideMenu).setTitle(extraMenuNames.get(0));
+                nav_Menu.findItem(R.id.extra2SideMenu).setVisible(false);
+                nav_Menu.findItem(R.id.extra3SideMenu).setVisible(false);
+            }
+            else if (extraMenuNames.size() == 2) {
+                nav_Menu.findItem(R.id.extra1SideMenu).setTitle(extraMenuNames.get(0));
+                nav_Menu.findItem(R.id.extra2SideMenu).setTitle(extraMenuNames.get(1));
+                nav_Menu.findItem(R.id.extra3SideMenu).setVisible(false);
+            }
+            else {
+                nav_Menu.findItem(R.id.extra1SideMenu).setTitle(extraMenuNames.get(0));
+                nav_Menu.findItem(R.id.extra2SideMenu).setTitle(extraMenuNames.get(1));
+                nav_Menu.findItem(R.id.extra3SideMenu).setTitle(extraMenuNames.get(2));
+            }
+        }
+    }
 
 }

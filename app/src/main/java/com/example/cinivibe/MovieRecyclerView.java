@@ -3,15 +3,24 @@ package com.example.cinivibe;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class MovieRecyclerView implements Parcelable {
     private String image;
     private String title;
     private String description;
+    private int [] genres;
+    private double rating;
+    private String releaseDate;
 
-    public MovieRecyclerView(String image, String title, String description) {
+    public MovieRecyclerView(String image, String title, String description, int [] genres, double rating, String releaseDate) {
         this.image = image;
         this.title = title;
         this.description = description;
+        this.genres = genres;
+        this.rating = rating;
+        this.releaseDate = releaseDate;
     }
 
     public MovieRecyclerView(Parcel in){
@@ -19,6 +28,10 @@ public class MovieRecyclerView implements Parcelable {
         image = in.readString();
         title = in.readString();
         description = in.readString();
+        genres = in.createIntArray();
+        rating = in.readDouble();
+        releaseDate = in.readString();
+
     }
 
     @Override
@@ -26,6 +39,9 @@ public class MovieRecyclerView implements Parcelable {
         dest.writeString(image);
         dest.writeString(title);
         dest.writeString(description);
+        dest.writeIntArray(genres);
+        dest.writeDouble(rating);
+        dest.writeString(releaseDate);
     }
 
     @Override
@@ -57,6 +73,12 @@ public class MovieRecyclerView implements Parcelable {
         return description;
     }
 
+    public int [] getArray() {return genres; }
+
+    public double getRating() {return rating; }
+
+    public String getReleaseDate() {return releaseDate; }
+
     public void setTitle(String title){
         this.title = title;
     }
@@ -68,5 +90,11 @@ public class MovieRecyclerView implements Parcelable {
     public void setDescription(String description){
         this.description = description;
     }
+
+    public void setArray(int [] genres) {this.genres = genres;}
+
+    public void setRating(double rating) {this.rating = rating;}
+
+    public void setReleaseDate(String releaseDate) {this.releaseDate = releaseDate;}
 
 }

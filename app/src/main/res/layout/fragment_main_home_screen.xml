@@ -111,7 +111,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/nowShowingRecyclerView"
-                android:layout_width="531dp"
+                android:layout_width="700dp"
                 android:layout_height="212dp"
                 android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -120,7 +120,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comingSoonRecyclerView"
-                android:layout_width="531dp"
+                android:layout_width="700dp"
                 android:layout_height="212dp"
                 android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -1,60 +1,31 @@
 package com.example.cinivibe;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainHomeScreenFragment extends Fragment implements CustomAdapter.OnMovieListener{
 
+    // All variables declared here
     private CustomAdapter now_playing_adapter;
     private CustomAdapter upcoming_adapter;
     private CustomAdapter action_adapter;
@@ -88,6 +59,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Initializes all of the ArrayLists
         now_playing = new ArrayList<>();
         upcoming = new ArrayList<>();
         action = new ArrayList<>();
@@ -97,7 +69,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         sci_fi = new ArrayList<>();
         individual_movie = new ArrayList<>();
 
-        // passing onMovieListener interface to constructor of CustomAdapter
+        // Initializes all of the adapters
         now_playing_adapter = new CustomAdapter(this.getContext(), now_playing, this);
         upcoming_adapter = new CustomAdapter(this.getContext(), upcoming, this);
         action_adapter = new CustomAdapter(this.getContext(), action, this);
@@ -111,12 +83,8 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
         mQueue = Volley.newRequestQueue(this.getContext());
 
+        // This method actually scrapes the movies and puts them into their respective genre arrays
         jsonParse();
-
-        //for (int i = 0; i < 10; i++) {
-        //    items.add(new MovieRecyclerView(R.drawable.cinivibe_logo, "Parasite"));
-        //    adapter.notifyDataSetChanged();
-        //}
 
         nowShowingRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL, false));
         nowShowingRecyclerView.setAdapter(now_playing_adapter);
@@ -124,6 +92,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         comingSoonRecyclerView.setAdapter(upcoming_adapter);
 
         // OnClickListener for the list of genres
+        // Based on what is clicked, it will fill the GridViewFragment with that genre of movies
         AdapterView.OnItemClickListener itemClickListener =
                 new AdapterView.OnItemClickListener(){
                     public void onItemClick(AdapterView<?> listView,
@@ -190,12 +159,15 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
                     }
                 };
+
         //Add the listener to the list View
         ListView listView = (ListView) getView().findViewById(R.id.listViewGenres);
         listView.setOnItemClickListener(itemClickListener);
 
+
         TextView seeAllPassData = (TextView) view.findViewById(R.id.seeAllNowShowing);
 
+        // Sets an onClickListener for whenever the user clicks on the See All button for Now Showing movies
         seeAllPassData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,6 +186,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
         TextView upcomingPassData = (TextView) view.findViewById(R.id.seeAllComingSoon);
 
+        // Sets an onClickListener for whenever the user clicks on the See All button for Upcoming movies
         upcomingPassData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,9 +206,8 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
     }
 
-
     // implemented method from class CustomAdapter to navigate to new activity
-    // passes movie from position sent
+    // Passes the movie based on the position it was in from the Now Playing ArrayList
     @Override
     public void onMovieClick(int position) {
         Bundle bundle = new Bundle();
@@ -249,16 +221,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                 .commit();
     }
 
-
-    public void onHomeClick(){
-        MainHomeScreenFragment nextFrag = new MainHomeScreenFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, nextFrag, "findThisFragment")
-                .addToBackStack(null)
-                .commit();
-    }
-
-
+    // Fully scrapes all movies including Now Showing, Upcoming, and all the genres
     private void jsonParse() {
 
         jsonParseNowPlaying();
@@ -268,7 +231,8 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         jsonParsePopular();
     }
 
-
+    // Scrapes all of the now playing movies and adds it to a Now Playing ArrayList
+    // It also sorts the movies into the different genre ArrayLists
     public void jsonParseNowPlaying(){
 
         String now_playing_url = "https://api.themoviedb.org/3/movie/now_playing?api_key=3e71659358fcc0e15a078ffbfd22b2fc&language=en-US&page=1";
@@ -299,14 +263,18 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                 String overview = movie.getString("overview");
                                 String release_date = movie.getString("release_date");
 
-                                now_playing.add(new MovieRecyclerView(poster_path, title, overview));
-                                now_playing_adapter.notifyDataSetChanged();
 
                                 int [] genre_ids = new int[genre_ids_JSON.length()];
 
                                 for (int j = 0; j < genre_ids_JSON.length(); j++) {
                                     genre_ids[j] = genre_ids_JSON.optInt(j);
                                 }
+
+                                MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date);
+
+
+                                now_playing.add(moviePlaceHolder);
+                                now_playing_adapter.notifyDataSetChanged();
 
                                 /** GENRES BY NUMBER (Genre List: https://api.themoviedb.org/3/genre/movie/list?api_key=3e71659358fcc0e15a078ffbfd22b2fc&language=en-US)
                                  *
@@ -332,30 +300,30 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                  *
                                  */
 
-
+                                // Sorts the movies into the different genre ArrayLists
                                 for (int j = 0; j < genre_ids_JSON.length(); j++){
                                     if (genre_ids[j] == 28){
-                                        action.add(new MovieRecyclerView(poster_path, title, overview));
+                                        action.add(moviePlaceHolder);
                                         action_adapter.notifyDataSetChanged();
                                     }
 
                                     if (genre_ids[j] == 10749){
-                                        romance.add(new MovieRecyclerView(poster_path, title, overview));
+                                        romance.add(moviePlaceHolder);
                                         romance_adapter.notifyDataSetChanged();
                                     }
 
                                     if (genre_ids[j] == 27){
-                                        horror.add(new MovieRecyclerView(poster_path, title, overview));
+                                        horror.add(moviePlaceHolder);
                                         horror_adapter.notifyDataSetChanged();
                                     }
 
                                     if (genre_ids[j] == 35){
-                                        comedy.add(new MovieRecyclerView(poster_path, title, overview));
+                                        comedy.add(moviePlaceHolder);
                                         comedy_adapter.notifyDataSetChanged();
                                     }
 
                                     if (genre_ids[j] == 878){
-                                        sci_fi.add(new MovieRecyclerView(poster_path, title, overview));
+                                        sci_fi.add(moviePlaceHolder);
                                         sci_fi_adapter.notifyDataSetChanged();
                                     }
                                 }
@@ -376,6 +344,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         mQueue.add(now_playing_request);
     }
 
+    // Scrapes all of the upcoming movies and adds it to a Upcoming ArrayList
     public void jsonParseUpcoming(){
 
         String upcoming_url = "https://api.themoviedb.org/3/movie/upcoming?api_key=3e71659358fcc0e15a078ffbfd22b2fc&language=en-US&page=1";
@@ -406,7 +375,15 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                 String overview = movie.getString("overview");
                                 String release_date = movie.getString("release_date");
 
-                                upcoming.add(new MovieRecyclerView(poster_path, title, overview));
+                                int [] genre_ids = new int[genre_ids_JSON.length()];
+
+                                for (int j = 0; j < genre_ids_JSON.length(); j++) {
+                                    genre_ids[j] = genre_ids_JSON.optInt(j);
+                                }
+
+                                MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date);
+
+                                upcoming.add(moviePlaceHolder);
                                 upcoming_adapter.notifyDataSetChanged();
 
                             }
@@ -426,6 +403,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         mQueue.add(upcoming_request);
     }
 
+    // Scrapes all of the Popular movies and sorts them into the different genre ArrayLists
     public void jsonParsePopular(){
 
         for (int i = 1; i < 3; i++){
@@ -464,6 +442,9 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                         genre_ids[j] = genre_ids_JSON.optInt(j);
                                     }
 
+                                    MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date);
+
+                                    // Sorts the movies into the different genre ArrayLists
                                     for (int j = 0; j < genre_ids_JSON.length(); j++) {
 
                                         if (genre_ids[j] == 28) {
@@ -473,7 +454,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                                 }
                                             }
 
-                                            action.add(new MovieRecyclerView(poster_path, title, overview));
+                                            action.add(moviePlaceHolder);
                                             action_adapter.notifyDataSetChanged();
                                         }
 
@@ -484,7 +465,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                                 }
                                             }
 
-                                            romance.add(new MovieRecyclerView(poster_path, title, overview));
+                                            romance.add(moviePlaceHolder);
                                             romance_adapter.notifyDataSetChanged();
 
                                         }
@@ -496,7 +477,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                                 }
                                             }
 
-                                            horror.add(new MovieRecyclerView(poster_path, title, overview));
+                                            horror.add(moviePlaceHolder);
                                             horror_adapter.notifyDataSetChanged();
                                         }
 
@@ -507,7 +488,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                                 }
                                             }
 
-                                            comedy.add(new MovieRecyclerView(poster_path, title, overview));
+                                            comedy.add(moviePlaceHolder);
                                             comedy_adapter.notifyDataSetChanged();
 
                                         }
@@ -519,7 +500,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                                 }
                                             }
 
-                                            sci_fi.add(new MovieRecyclerView(poster_path, title, overview));
+                                            sci_fi.add(moviePlaceHolder);
                                             sci_fi_adapter.notifyDataSetChanged();
                                         }
                                     }

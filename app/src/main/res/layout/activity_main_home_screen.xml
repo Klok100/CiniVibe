@@ -56,6 +56,7 @@
                     android:layout_marginEnd="75dp"
                     android:layout_marginBottom="3dp"
                     android:background="@drawable/home_button"
+                    android:onClick="onHomeClick"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -80,7 +81,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/profile_header"
-        app:menu="@menu/drawer_menu"
+        app:menu="@menu/side_drawer_menu"
         app:itemTextColor="@color/white"
         android:background="@color/black"/>
 

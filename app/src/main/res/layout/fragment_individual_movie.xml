@@ -16,6 +16,44 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <TextView
+        android:id="@+id/cinivibeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieImage" />
+
+    <TextView
+        android:id="@+id/releaseDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cinivibeTitle" />
+
+    <TextView
+        android:id="@+id/movieDescriptions"
+        android:layout_width="650dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:isScrollContainer="true"
+        android:text="Description"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/releaseDate" />
+
     <ImageView
         android:id="@+id/backButton"
         android:layout_width="87dp"
@@ -28,30 +66,46 @@
         app:srcCompat="@drawable/back_button" />
 
     <TextView
-        android:id="@+id/movieDescriptions"
-        android:layout_width="384dp"
-        android:layout_height="136dp"
-        android:layout_marginTop="52dp"
-        android:gravity="center"
-        android:isScrollContainer="true"
-        android:text="Description"
-        android:textAlignment="center"
+        android:id="@+id/genreList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="TextView"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cinivibeTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/movieDescriptions" />
 
-    <TextView
-        android:id="@+id/cinivibeTitle"
-        android:layout_width="339dp"
-        android:layout_height="77dp"
-        android:layout_marginTop="48dp"
-        android:text="Title"
-        android:textAlignment="center"
-        android:textSize="50sp"
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:isIndicator="true"
+        android:progressBackgroundTint="@color/grey"
+        android:numStars="10"
+        android:stepSize="0.1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movieImage" />
+        app:layout_constraintTop_toBottomOf="@+id/genreList" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_gravity="bottom|end"
+            android:clickable="true"
+            android:onClick="onFabClick"
+            app:backgroundTint="@android:color/transparent"
+            app:maxImageSize="60dp"
+            app:srcCompat="@drawable/save_to_collection_icon" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,12 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-
-
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-
-
-    <color name="gold">#FFD735</color>
+    <color name="gold">#FFBF2B</color>
     <color name="maroon">#A0042B</color>
+    <color name="popUpShadow">#800322</color>
+    <color name="darkGold">#C09020</color>
+    <color name="transparent">#80000000</color>
+    <color name="transparentGold">#80FFBF2B</color>
+    <color name="grey">#AAAAAA</color>
+
 </resources>

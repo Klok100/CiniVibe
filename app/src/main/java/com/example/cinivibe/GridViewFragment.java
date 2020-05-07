@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,8 +45,8 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
         comedy = bundle.getParcelableArrayList("comedy");
         sci_fi = bundle.getParcelableArrayList("sci_fi");
 
-        RecyclerView recyclerView = view.findViewById(R.id.rvNumbers);
-        CustomAdapter adapter;
+        final RecyclerView recyclerView = view.findViewById(R.id.rvNumbers);
+        final CustomAdapter adapter;
 
         if (now_playing != null){
             // passing onMovieListener interface to constructor of CustomAdapter
@@ -92,6 +94,79 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 4, RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(adapter);
 
+        // Sets the onClickListener for the Spinner to sort the list of movies
+        Spinner sortingSpinner = view.findViewById(R.id.sortingSpinner);
+        sortingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedItem = adapterView.getItemAtPosition(i).toString();
+                if (selectedItem.equals("Sort from A-Z")){
+
+                    sortAZ();
+
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4, RecyclerView.VERTICAL, false));
+                    recyclerView.setAdapter(adapter);
+                }
+
+                if (selectedItem.equals("Sort by Rating")){
+
+                    sortRating();
+
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4, RecyclerView.VERTICAL, false));
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+    }
+
+    // Sorts the movies by their title
+    public void sortAZ(){
+
+        int min = 0;
+        MovieRecyclerView temp = null;
+        for (int i = 0; i < genre.size() - 1; i++)
+        {
+            min = i;
+            for (int j = i + 1; j < genre.size(); j++)
+            {
+                if (genre.get(min).getTitle().compareTo(genre.get(j).getTitle()) > 0)
+                {
+                    min = j;
+                }
+            }
+
+            temp = genre.get(min);
+            genre.set(min, genre.get(i));
+            genre.set(i, temp);
+        }
+    }
+
+    // Sorts the movies by their ratings
+    public void sortRating(){
+
+        int min = 0;
+        MovieRecyclerView temp = null;
+        for (int i = 0; i < genre.size() - 1; i++)
+        {
+            min = i;
+            for (int j = i + 1; j < genre.size(); j++)
+            {
+                if (genre.get(min).getRating() < genre.get(j).getRating())
+                {
+                    min = j;
+                }
+            }
+
+            temp = genre.get(min);
+            genre.set(min, genre.get(i));
+            genre.set(i, temp);
+        }
     }
 
     @Override
