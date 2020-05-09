@@ -64,7 +64,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         super.onViewCreated(view, savedInstanceState);
 
         // Initializes all of the ArrayLists
-        now_playing = new ArrayList<>();
+        now_playing = MainHomeScreenActivity.now_playing;
         upcoming = new ArrayList<>();
         action = new ArrayList<>();
         romance = new ArrayList<>();
@@ -214,6 +214,9 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
     // Passes the movie based on the position it was in from the Now Playing ArrayList
     @Override
     public void onMovieClick(int position) {
+        MainHomeScreenActivity.movie = position;
+//        int moviePosition = MainHomeScreenActivity.movie;
+//        moviePosition = position;
         Bundle bundle = new Bundle();
         bundle.putParcelable("movie", now_playing.get(position));
 

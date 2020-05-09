@@ -3,9 +3,11 @@ package com.example.cinivibe;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,9 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,21 +33,54 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
     public static ArrayList<String> extraMenuNames;
     public IndividualMovieFragment individualMovieFragment;
     public static SharedPreferences sharedPreferences;
+    public NavigationView navigationView;
+    public static int movie;
+    public int moviePosition;
+    public static ArrayList<MovieRecyclerView> now_playing;
+    public static ArrayList<MovieRecyclerView> genre;
+    public static String collectionName;
+    public static ArrayList<MovieRecyclerView> favoritesCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> wishlistCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> firstCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> secondCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> thirdCollectionArraylist;
+    public static boolean genreCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_screen);
+        movie = 0;
+        genreCheck = false;
+        checkArraylists();
 
         individualMovieFragment = new IndividualMovieFragment();
         sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         loadArraylist();
         updateArraylist();
 
+        // Creates a Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        // Adds the OnClickListener for the Home Button
+        toolbar.findViewById(R.id.home_button).setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MainHomeScreenFragment()).commit();
+            }
+        });
+
+        // Adds the OnClickListener for the Search Button
+//        toolbar.findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//
+//            }
+//        });
+
         // Gets the custom Drawer
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        hideItem(extraMenuNames,navigationView);
+        navigationView = findViewById(R.id.nav_view);
+        hideItem(extraMenuNames);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -51,14 +88,32 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        if (getIntent().getStringExtra("individualMovieFrag") != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    individualMovieFragment).commit();
-        }
-        else {
+        Intent intent = getIntent();
+        if (intent.getStringExtra("individualMovieFrag") == null) {
             // Fills the fragment container with the Main Home Screen Fragment at the start of this activity
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new MainHomeScreenFragment()).commit();
+        }
+        else {
+            moviePosition = intent.getIntExtra("moviePosition",0);
+            Bundle bundle = new Bundle();
+            if (genreCheck = true) {
+                bundle.putParcelableArrayList(genre.toString(), genre);
+
+                GridViewFragment nextFrag = new GridViewFragment();
+                nextFrag.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+            else {
+                bundle.putParcelable("movie", now_playing.get(moviePosition));
+                IndividualMovieFragment nextFrag = new IndividualMovieFragment();
+                nextFrag.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        nextFrag).commit();
+            }
         }
     }
 
@@ -82,6 +137,7 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
             for (int i = 0; i < arrPackageData.size(); i++) {
                 extraMenuNames.set(i, arrPackageData.get(i));
             }
+            extraMenuNames.remove(0);
         }
 
     }
@@ -93,7 +149,7 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         Gson gson = new Gson();
         String json = gson.toJson(extraMenuNames);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("Set",json);
+        editor.putString("Set",json );
         editor.commit();
 
     }
@@ -125,15 +181,19 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
 
             case R.id.nav_favorites:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new GridViewFragment()).commit();
+                        new CollectionViewFragment()).commit();
                 break;
 
             case R.id.nav_wishlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new GridViewFragment()).commit();
+                        new CollectionViewFragment()).commit();
                 break;
-
-            case R.id.extra1SideMenu:
+            case R.id.extra1SideMenu: {
+                collectionName = "first";
+                CollectionViewFragment collectionViewFragment = new CollectionViewFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new CollectionViewFragment()).commit();
+            }
                 break;
 
             case R.id.extra2SideMenu:
@@ -192,7 +252,7 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         return sharedPreferences;
     }
 
-    public void hideItem(ArrayList<String> extraMenuNames, NavigationView navigationView) {
+    public void hideItem(ArrayList<String> extraMenuNames) {
         Menu nav_Menu = navigationView.getMenu();
         if (extraMenuNames.isEmpty()) {
             nav_Menu.findItem(R.id.extra1SideMenu).setVisible(false);
@@ -215,6 +275,31 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
                 nav_Menu.findItem(R.id.extra2SideMenu).setTitle(extraMenuNames.get(1));
                 nav_Menu.findItem(R.id.extra3SideMenu).setTitle(extraMenuNames.get(2));
             }
+        }
+    }
+
+    public void checkArraylists() {
+        if (now_playing == null) {
+            now_playing = new ArrayList<>();
+        }
+        if (genre == null) {
+            genre = new ArrayList<>();
+        }
+
+        if (favoritesCollectionArraylist == null) {
+            favoritesCollectionArraylist = new ArrayList<>();
+        }
+        if (wishlistCollectionArraylist == null) {
+            wishlistCollectionArraylist = new ArrayList<>();
+        }
+        if (firstCollectionArraylist == null) {
+            firstCollectionArraylist = new ArrayList<>();
+        }
+        if (secondCollectionArraylist == null) {
+            secondCollectionArraylist = new ArrayList<>();
+        }
+        if (thirdCollectionArraylist == null) {
+            thirdCollectionArraylist = new ArrayList<>();
         }
     }
 

@@ -27,8 +27,9 @@ public class IndividualMovieFragment extends Fragment {
     private int [] genres;
     private float rating;
     private String releaseDate;
+    private boolean genreCheck;
 
-    public BottomNavDrawerFragment bottomNavFragment;
+//    public BottomNavDrawerFragment bottomNavFragment;
 
     @Nullable
     @Override
@@ -45,7 +46,7 @@ public class IndividualMovieFragment extends Fragment {
 
         // Gets individual movie data
         movie = bundle.getParcelable("movie");
-
+//        genreCheck = bundle.getBoolean("genreCheck");
 
         // Gets movie title and description
         image = "https://image.tmdb.org/t/p/w185/" + movie.getImage();
@@ -117,13 +118,14 @@ public class IndividualMovieFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bottomNavFragment = new BottomNavDrawerFragment();
-                IndividualMovieFragment nextFrag = new IndividualMovieFragment();
+                BottomNavDrawerFragment bottomNavFragment = new BottomNavDrawerFragment();
+                IndividualMovieFragment individualMovieFragment = new IndividualMovieFragment();
+
                 bundle.putParcelable("movie", movie);
-                nextFrag.setArguments(bundle);
+                individualMovieFragment.setArguments(bundle);
                 bottomNavFragment.show(getActivity().getSupportFragmentManager(), "TAG");
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        nextFrag).commit();
+                        individualMovieFragment).commit();
             }
         });
 
