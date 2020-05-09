@@ -115,6 +115,14 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
                     recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4, RecyclerView.VERTICAL, false));
                     recyclerView.setAdapter(adapter);
                 }
+
+                if (selectedItem.equals("Sort by Release Date")){
+
+                    sortDate();
+
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4, RecyclerView.VERTICAL, false));
+                    recyclerView.setAdapter(adapter);
+                }
             }
 
             @Override
@@ -158,6 +166,28 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
             for (int j = i + 1; j < genre.size(); j++)
             {
                 if (genre.get(min).getRating() < genre.get(j).getRating())
+                {
+                    min = j;
+                }
+            }
+
+            temp = genre.get(min);
+            genre.set(min, genre.get(i));
+            genre.set(i, temp);
+        }
+
+    }
+
+    public void sortDate(){
+        int min = 0;
+        MovieRecyclerView temp = null;
+
+        for (int i = 0; i < genre.size() - 1; i++)
+        {
+            min = i;
+            for (int j = i + 1; j < genre.size(); j++)
+            {
+                if (genre.get(min).getDateValue() < genre.get(j).getDateValue())
                 {
                     min = j;
                 }

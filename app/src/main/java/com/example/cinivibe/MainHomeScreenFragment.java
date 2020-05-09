@@ -21,7 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainHomeScreenFragment extends Fragment implements CustomAdapter.OnMovieListener{
 
@@ -221,6 +225,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                 .commit();
     }
 
+
     // Fully scrapes all movies including Now Showing, Upcoming, and all the genres
     private void jsonParse() {
 
@@ -270,7 +275,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                     genre_ids[j] = genre_ids_JSON.optInt(j);
                                 }
 
-                                MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date);
+                                MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date, getDateValue(release_date));
 
 
                                 now_playing.add(moviePlaceHolder);
@@ -345,62 +350,71 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
     }
 
     // Scrapes all of the upcoming movies and adds it to a Upcoming ArrayList
-    public void jsonParseUpcoming(){
+    public void jsonParseUpcoming() {
 
-        String upcoming_url = "https://api.themoviedb.org/3/movie/upcoming?api_key=3e71659358fcc0e15a078ffbfd22b2fc&language=en-US&page=1";
+        for (int i = 1; i < 3; i++){
 
-        JsonObjectRequest upcoming_request = new JsonObjectRequest(Request.Method.GET, upcoming_url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("results");
+            String upcoming_url = "https://api.themoviedb.org/3/movie/upcoming?api_key=3e71659358fcc0e15a078ffbfd22b2fc&language=en-US&page=" + i;
 
-                            for (int i = 0; i < jsonArray.length(); i++) {
+            JsonObjectRequest upcoming_request = new JsonObjectRequest(Request.Method.GET, upcoming_url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray jsonArray = response.getJSONArray("results");
 
-                                JSONObject movie = jsonArray.getJSONObject(i);
+                                for (int i = 0; i < jsonArray.length(); i++) {
 
-                                Double popularity = movie.getDouble("popularity");
-                                int vote_count = movie.getInt("vote_count");
-                                Boolean video = movie.getBoolean("video");
-                                String poster_path = movie.getString("poster_path");
-                                int id = movie.getInt("id");
-                                JSONArray genre_ids_JSON = movie.optJSONArray("genre_ids");
-                                Boolean adult = movie.getBoolean("adult");
-                                String backdrop_path = movie.getString("backdrop_path");
-                                String original_language = movie.getString("original_language");
-                                String original_title = movie.getString("original_title");
-                                String title = movie.getString("title");
-                                Double vote_average = movie.getDouble("vote_average");
-                                String overview = movie.getString("overview");
-                                String release_date = movie.getString("release_date");
+                                    JSONObject movie = jsonArray.getJSONObject(i);
 
-                                int [] genre_ids = new int[genre_ids_JSON.length()];
+                                    Double popularity = movie.getDouble("popularity");
+                                    int vote_count = movie.getInt("vote_count");
+                                    Boolean video = movie.getBoolean("video");
+                                    String poster_path = movie.getString("poster_path");
+                                    int id = movie.getInt("id");
+                                    JSONArray genre_ids_JSON = movie.optJSONArray("genre_ids");
+                                    Boolean adult = movie.getBoolean("adult");
+                                    String backdrop_path = movie.getString("backdrop_path");
+                                    String original_language = movie.getString("original_language");
+                                    String original_title = movie.getString("original_title");
+                                    String title = movie.getString("title");
+                                    Double vote_average = movie.getDouble("vote_average");
+                                    String overview = movie.getString("overview");
+                                    String release_date = movie.getString("release_date");
 
-                                for (int j = 0; j < genre_ids_JSON.length(); j++) {
-                                    genre_ids[j] = genre_ids_JSON.optInt(j);
+                                    int[] genre_ids = new int[genre_ids_JSON.length()];
+
+                                    for (int j = 0; j < genre_ids_JSON.length(); j++) {
+                                        genre_ids[j] = genre_ids_JSON.optInt(j);
+                                    }
+
+                                    String dateToday = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+                                    if (getDateValue(dateToday) < getDateValue(release_date)) {
+
+                                        MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date, getDateValue(release_date));
+
+                                        upcoming.add(moviePlaceHolder);
+                                        upcoming_adapter.notifyDataSetChanged();
+                                    }
+
                                 }
 
-                                MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date);
 
-                                upcoming.add(moviePlaceHolder);
-                                upcoming_adapter.notifyDataSetChanged();
-
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
 
-        mQueue.add(upcoming_request);
+            mQueue.add(upcoming_request);
+
+        }
     }
 
     // Scrapes all of the Popular movies and sorts them into the different genre ArrayLists
@@ -442,70 +456,33 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                         genre_ids[j] = genre_ids_JSON.optInt(j);
                                     }
 
-                                    MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date);
+
+                                    MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date, getDateValue(release_date));
 
                                     // Sorts the movies into the different genre ArrayLists
                                     for (int j = 0; j < genre_ids_JSON.length(); j++) {
 
                                         if (genre_ids[j] == 28) {
-                                            for (int k = 0; k < action.size(); k++) {
-                                                if (title.equals(action.get(k).getTitle())) {
-                                                    action.remove(k);
-                                                }
-                                            }
-
-                                            action.add(moviePlaceHolder);
-                                            action_adapter.notifyDataSetChanged();
+                                            checkDupes(action, action_adapter, title, moviePlaceHolder);
                                         }
 
                                         if (genre_ids[j] == 10749){
-                                            for (int k = 0; k < romance.size(); k++) {
-                                                if (title.equals(romance.get(k).getTitle())) {
-                                                    romance.remove(k);
-                                                }
-                                            }
-
-                                            romance.add(moviePlaceHolder);
-                                            romance_adapter.notifyDataSetChanged();
-
+                                            checkDupes(romance, romance_adapter, title, moviePlaceHolder);
                                         }
 
                                         if (genre_ids[j] == 27) {
-                                            for (int k = 0; k < horror.size(); k++) {
-                                                if (title.equals(horror.get(k).getTitle())) {
-                                                    horror.remove(k);
-                                                }
-                                            }
-
-                                            horror.add(moviePlaceHolder);
-                                            horror_adapter.notifyDataSetChanged();
+                                            checkDupes(horror, horror_adapter, title, moviePlaceHolder);
                                         }
 
                                         if (genre_ids[j] == 35){
-                                            for (int k = 0; k < comedy.size(); k++) {
-                                                if (title.equals(comedy.get(k).getTitle())) {
-                                                    comedy.remove(k);
-                                                }
-                                            }
-
-                                            comedy.add(moviePlaceHolder);
-                                            comedy_adapter.notifyDataSetChanged();
-
+                                            checkDupes(comedy, comedy_adapter, title, moviePlaceHolder);
                                         }
 
                                         if (genre_ids[j] == 878){
-                                            for (int k = 0; k < sci_fi.size(); k++) {
-                                               if (title.equals(sci_fi.get(k).getTitle())) {
-                                                    sci_fi.remove(k);
-                                                }
-                                            }
-
-                                            sci_fi.add(moviePlaceHolder);
-                                            sci_fi_adapter.notifyDataSetChanged();
+                                            checkDupes(sci_fi, sci_fi_adapter, title, moviePlaceHolder);
                                         }
                                     }
                                 }
-
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -520,4 +497,23 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
             mQueue.add(popular_request);
         }
     }
+
+    public int getDateValue(String release_date){
+        int yearMovie = Integer.parseInt(release_date.substring(0, 4)) * 10000;
+        int monthMovie = Integer.parseInt(release_date.substring(5, 7)) * 100;
+        int dayMovie = Integer.parseInt(release_date.substring(8));
+        return yearMovie + monthMovie + dayMovie;
+    }
+
+    public void checkDupes(ArrayList<MovieRecyclerView> list, CustomAdapter list_adapter, String title, MovieRecyclerView moviePlaceHolder){
+        for (int k = 0; k < list.size(); k++) {
+            if (title.equals(list.get(k).getTitle())) {
+                list.remove(k);
+            }
+        }
+
+        list.add(moviePlaceHolder);
+        list_adapter.notifyDataSetChanged();
+    }
+
 }
