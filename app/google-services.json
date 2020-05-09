@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "174842873297",
+    "firebase_url": "https://cinivibe.firebaseio.com",
+    "project_id": "cinivibe",
+    "storage_bucket": "cinivibe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174842873297:android:0df691adf1ddd8fd1eccf0",
+        "android_client_info": {
+          "package_name": "com.example.cinivibe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174842873297-r0kc2li54le1u9pjbegs90cucdk746ln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw6HLjMsBYtCbp1ruWTNL5yvSV7JpQcCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174842873297-r0kc2li54le1u9pjbegs90cucdk746ln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

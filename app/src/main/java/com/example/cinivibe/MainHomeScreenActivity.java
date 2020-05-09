@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -22,21 +24,35 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainHomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainHomeScreenActivity extends AppCompatActivity implements CustomAdapter.OnMovieListener, NavigationView.OnNavigationItemSelectedListener {
 
     // Creates a global drawer object
     private DrawerLayout drawer;
+    private CustomAdapter adapter;
     public static final String EXTRA_NAME = "name";
     public static ArrayList<String> extraMenuNames;
     public IndividualMovieFragment individualMovieFragment;
     public static SharedPreferences sharedPreferences;
     public NavigationView navigationView;
+    public static int movie;
+    public int moviePosition;
+    public static ArrayList<MovieRecyclerView> now_playing;
+    public static ArrayList<MovieRecyclerView> genre;
+    public static String collectionName;
+    public static ArrayList<MovieRecyclerView> favoritesCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> wishlistCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> firstCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> secondCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> thirdCollectionArraylist;
+    public static boolean genreCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_screen);
+        movie = 0;
+        genreCheck = false;
+        checkArraylists();
 
         individualMovieFragment = new IndividualMovieFragment();
         sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
@@ -55,11 +71,11 @@ public class MainHomeScreenActivity extends AppCompatActivity
         });
 
         // Adds the OnClickListener for the Search Button
-        toolbar.findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-
-            }
-        });
+//        toolbar.findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//
+//            }
+//        });
 
         // Gets the custom Drawer
         drawer = findViewById(R.id.drawer_layout);
@@ -72,14 +88,32 @@ public class MainHomeScreenActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        if (getIntent().getStringExtra("individualMovieFrag") != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    individualMovieFragment).commit();
-        }
-        else {
+        Intent intent = getIntent();
+        if (intent.getStringExtra("individualMovieFrag") == null) {
             // Fills the fragment container with the Main Home Screen Fragment at the start of this activity
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new MainHomeScreenFragment()).commit();
+        }
+        else {
+            moviePosition = intent.getIntExtra("moviePosition",0);
+            Bundle bundle = new Bundle();
+            if (genreCheck = true) {
+                bundle.putParcelableArrayList(genre.toString(), genre);
+
+                GridViewFragment nextFrag = new GridViewFragment();
+                nextFrag.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+            else {
+                bundle.putParcelable("movie", now_playing.get(moviePosition));
+                IndividualMovieFragment nextFrag = new IndividualMovieFragment();
+                nextFrag.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        nextFrag).commit();
+            }
         }
     }
 
@@ -103,6 +137,7 @@ public class MainHomeScreenActivity extends AppCompatActivity
             for (int i = 0; i < arrPackageData.size(); i++) {
                 extraMenuNames.set(i, arrPackageData.get(i));
             }
+            extraMenuNames.remove(0);
         }
 
     }
@@ -117,6 +152,11 @@ public class MainHomeScreenActivity extends AppCompatActivity
         editor.putString("Set",json );
         editor.commit();
 
+    }
+
+    public void onHomeClick(View v){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new MainHomeScreenFragment()).commit();
     }
 
     // Replaces the fragment container with the Grid View Fragment, when the See All button is pressed
@@ -141,20 +181,24 @@ public class MainHomeScreenActivity extends AppCompatActivity
 
             case R.id.nav_favorites:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new GridViewFragment()).commit();
+                        new CollectionViewFragment()).commit();
                 break;
 
             case R.id.nav_wishlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new GridViewFragment()).commit();
+                        new CollectionViewFragment()).commit();
                 break;
             case R.id.extra1SideMenu: {
-                Bundle bundle = new Bundle();
-                bundle.putString("collectionName",navigationView.getMenu().getItem(R.id.extra1SideMenu).toString());
+                collectionName = "first";
+                CollectionViewFragment collectionViewFragment = new CollectionViewFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new CollectionViewFragment()).commit();
             }
                 break;
+
             case R.id.extra2SideMenu:
                 break;
+
             case R.id.extra3SideMenu:
                 break;
         }
@@ -179,6 +223,30 @@ public class MainHomeScreenActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+
+    /**
+     * This method will be called to minimize the on screen keyboard in the Activity
+     * When we get the current view, it is the view that has focus, which is the keyboard
+     * Credit - Found by Ram Dixit, 2019
+     *
+     * Source:  https://www.youtube.com/watch?v=CW5Xekqfx3I
+     */
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();     // view will refer to the keyboard
+        if (view != null ){                     // if there is a view that has focus
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    // implemented method from class CustomAdapter to navigate to new activity
+    // passes movie from position sent
+    @Override
+    public void onMovieClick(int position) {
+
+    }
+
 
     public static SharedPreferences getSharedPreferences() {
         return sharedPreferences;
@@ -207,6 +275,31 @@ public class MainHomeScreenActivity extends AppCompatActivity
                 nav_Menu.findItem(R.id.extra2SideMenu).setTitle(extraMenuNames.get(1));
                 nav_Menu.findItem(R.id.extra3SideMenu).setTitle(extraMenuNames.get(2));
             }
+        }
+    }
+
+    public void checkArraylists() {
+        if (now_playing == null) {
+            now_playing = new ArrayList<>();
+        }
+        if (genre == null) {
+            genre = new ArrayList<>();
+        }
+
+        if (favoritesCollectionArraylist == null) {
+            favoritesCollectionArraylist = new ArrayList<>();
+        }
+        if (wishlistCollectionArraylist == null) {
+            wishlistCollectionArraylist = new ArrayList<>();
+        }
+        if (firstCollectionArraylist == null) {
+            firstCollectionArraylist = new ArrayList<>();
+        }
+        if (secondCollectionArraylist == null) {
+            secondCollectionArraylist = new ArrayList<>();
+        }
+        if (thirdCollectionArraylist == null) {
+            thirdCollectionArraylist = new ArrayList<>();
         }
     }
 

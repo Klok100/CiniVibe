@@ -53,17 +53,11 @@
                     android:layout_width="70dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="3dp"
+                    android:layout_marginEnd="75dp"
                     android:layout_marginBottom="3dp"
                     android:background="@drawable/home_button"
+                    android:onClick="onHomeClick"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/search_button"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageButton
-                    android:id="@+id/search_button"
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/search_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

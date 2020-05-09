@@ -4,10 +4,11 @@
     <string name="navigation_drawer_close">Drawer Closed</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string-array name="Theaters">
-        <item>AMC Loews Streets of Woodfield</item>
-        <item>AMC South Barrington</item>
-        <item>Century 16 Deer Park</item>
+    <string-array name="Sorting">
+        <item>Click to Sort By</item>
+        <item>Sort from A-Z</item>
+        <item>Sort by Rating</item>
+        <item>Sort by Release Date</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -16,6 +17,6 @@
         <item>Romance</item>
         <item>Horror</item>
         <item>Comedy</item>
-        <item>Animation</item>
+        <item>Sci-Fi</item>
     </string-array>
 </resources>

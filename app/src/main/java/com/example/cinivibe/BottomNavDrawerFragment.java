@@ -40,6 +40,8 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
     public View view;
     public static SharedPreferences sharedPreferences;
     private static Context context = null;
+    public MovieRecyclerView movie;
+    public boolean genreCheck;
 
     public BottomNavDrawerFragment() {
         // Required empty public constructor
@@ -59,6 +61,10 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Inflate the layout for this fragment
+
+//        Bundle bundle = this.getArguments();
+//        movie = bundle.getParcelable("movie");
+//        genreCheck = bundle.getBoolean("genreCheck");
 
         context = getActivity();
         sharedPreferences = MainHomeScreenActivity.getSharedPreferences();
@@ -83,6 +89,10 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
                         break;
                     case R.id.addMenu:
                         Intent intent = new Intent(getActivity(), CustomPopupActivity.class);
+                        intent.putExtra("moviePosition", MainHomeScreenActivity.movie);
+//                        if (genreCheck = true) {
+//                            intent.putExtra("genreCheck", genreCheck);
+//                        }
                         startActivity(intent);
                         break;
                 }
@@ -138,7 +148,7 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
             Type type = new TypeToken<List<String>>() {
             }.getType();
             extraMenuNames = gson.fromJson(json, type);
-            extraMenuNames.remove(0);
+//            extraMenuNames.remove(0);
         }
 
     }
