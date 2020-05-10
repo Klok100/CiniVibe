@@ -50,7 +50,6 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_screen);
-        movie = 0;
         genreCheck = false;
         checkArraylists();
 
@@ -95,10 +94,12 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
                     new MainHomeScreenFragment()).commit();
         }
         else {
-            moviePosition = intent.getIntExtra("moviePosition",0);
+//            moviePosition = intent.getIntExtra("moviePosition",0);
             Bundle bundle = new Bundle();
             if (genreCheck = true) {
+//                movie = moviePosition;
                 bundle.putParcelableArrayList(genre.toString(), genre);
+                bundle.putBoolean("genreCheck", true);
 
                 GridViewFragment nextFrag = new GridViewFragment();
                 nextFrag.setArguments(bundle);
@@ -108,7 +109,7 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
                         .commit();
             }
             else {
-                bundle.putParcelable("movie", now_playing.get(moviePosition));
+                bundle.putParcelable("movie", now_playing.get(movie));
                 IndividualMovieFragment nextFrag = new IndividualMovieFragment();
                 nextFrag.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

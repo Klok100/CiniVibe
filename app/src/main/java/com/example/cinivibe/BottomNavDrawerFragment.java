@@ -89,7 +89,7 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
                         break;
                     case R.id.addMenu:
                         Intent intent = new Intent(getActivity(), CustomPopupActivity.class);
-                        intent.putExtra("moviePosition", MainHomeScreenActivity.movie);
+//                        intent.putExtra("moviePosition", MainHomeScreenActivity.movie);
 //                        if (genreCheck = true) {
 //                            intent.putExtra("genreCheck", genreCheck);
 //                        }

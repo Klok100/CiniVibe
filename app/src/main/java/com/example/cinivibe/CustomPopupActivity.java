@@ -33,9 +33,6 @@ public class CustomPopupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_popup);
 
-        Intent intent = getIntent();
-        moviePosition = intent.getIntExtra("moviePosition",0);
-//        genreCheck = intent.getBooleanExtra("genreCheck",false);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -62,13 +59,7 @@ public class CustomPopupActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainHomeScreenActivity.class);
         intent.putExtra(MainHomeScreenActivity.EXTRA_NAME, name);
         intent.putExtra("individualMovieFrag", "individualMovieFrag");
-//        if (genreCheck = true) {
-//            intent.putExtra("genreCheck", genreCheck);
-//        }
-        intent.putExtra("moviePosition",moviePosition);
-        /** What does this line do? Cause it crashes when I uncomment it, but everything seems to work when it's not included
-         --> intent.putExtra("individualMovieFrag", "individualMovieFrag"); <--
-         **/
+//        intent.putExtra("moviePosition",moviePosition);
         startActivity(intent);
     }
 
