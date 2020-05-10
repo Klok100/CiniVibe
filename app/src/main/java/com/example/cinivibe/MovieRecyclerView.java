@@ -13,14 +13,16 @@ public class MovieRecyclerView implements Parcelable {
     private int [] genres;
     private double rating;
     private String releaseDate;
+    private int dateValue;
 
-    public MovieRecyclerView(String image, String title, String description, int [] genres, double rating, String releaseDate) {
+    public MovieRecyclerView(String image, String title, String description, int [] genres, double rating, String releaseDate, int dateValue) {
         this.image = image;
         this.title = title;
         this.description = description;
         this.genres = genres;
         this.rating = rating;
         this.releaseDate = releaseDate;
+        this.dateValue = dateValue;
     }
 
     public MovieRecyclerView(Parcel in){
@@ -31,6 +33,7 @@ public class MovieRecyclerView implements Parcelable {
         genres = in.createIntArray();
         rating = in.readDouble();
         releaseDate = in.readString();
+        dateValue = in.readInt();
 
     }
 
@@ -42,6 +45,7 @@ public class MovieRecyclerView implements Parcelable {
         dest.writeIntArray(genres);
         dest.writeDouble(rating);
         dest.writeString(releaseDate);
+        dest.writeInt(dateValue);
     }
 
     @Override
@@ -59,6 +63,7 @@ public class MovieRecyclerView implements Parcelable {
         public MovieRecyclerView[] newArray(int size) {
             return new MovieRecyclerView[size];
         }
+
     };
 
     public String getImage() {
@@ -79,6 +84,8 @@ public class MovieRecyclerView implements Parcelable {
 
     public String getReleaseDate() {return releaseDate; }
 
+    public int getDateValue() {return dateValue; }
+
     public void setTitle(String title){
         this.title = title;
     }
@@ -91,10 +98,12 @@ public class MovieRecyclerView implements Parcelable {
         this.description = description;
     }
 
-    public void setArray(int [] genres) {this.genres = genres;}
+    public void setArray(int [] genres) {this.genres = genres; }
 
-    public void setRating(double rating) {this.rating = rating;}
+    public void setRating(double rating) {this.rating = rating; }
 
-    public void setReleaseDate(String releaseDate) {this.releaseDate = releaseDate;}
+    public void setReleaseDate(String releaseDate) {this.releaseDate = releaseDate; }
+
+    public void setDateValue(int dateValue) {this.dateValue = dateValue; }
 
 }

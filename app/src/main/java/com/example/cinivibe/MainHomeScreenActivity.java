@@ -50,7 +50,8 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_screen);
-        genreCheck = false;
+//        movie = 0;
+//        genreCheck = false;
         checkArraylists();
 
         individualMovieFragment = new IndividualMovieFragment();
@@ -59,15 +60,15 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         updateArraylist();
 
         // Creates a Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
 
         // Adds the OnClickListener for the Home Button
-        toolbar.findViewById(R.id.home_button).setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new MainHomeScreenFragment()).commit();
-            }
-        });
+        //toolbar.findViewById(R.id.home_button).setOnClickListener(new View.OnClickListener(){
+        //    public void onClick(View v){
+        //        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+        //                new MainHomeScreenFragment()).commit();
+        //    }
+        //});
 
         // Adds the OnClickListener for the Search Button
 //        toolbar.findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener(){
@@ -94,10 +95,9 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
                     new MainHomeScreenFragment()).commit();
         }
         else {
-//            moviePosition = intent.getIntExtra("moviePosition",0);
+            moviePosition = intent.getIntExtra("moviePosition",0);
             Bundle bundle = new Bundle();
-            if (genreCheck = true) {
-//                movie = moviePosition;
+            if (genreCheck == true) {
                 bundle.putParcelableArrayList(genre.toString(), genre);
                 bundle.putBoolean("genreCheck", true);
 
@@ -138,14 +138,14 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
             for (int i = 0; i < arrPackageData.size(); i++) {
                 extraMenuNames.set(i, arrPackageData.get(i));
             }
-            extraMenuNames.remove(0);
+            if (extraMenuNames.get(0) == null) {
+                extraMenuNames.remove(0);
+            }
         }
 
     }
 
     public void updateArraylist() {
-
-
         extraMenuNames.add(getIntent().getStringExtra(this.EXTRA_NAME));
         Gson gson = new Gson();
         String json = gson.toJson(extraMenuNames);
@@ -181,26 +181,28 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
             // When one of the icons is pressed, replace the fragment container with the customized Grid View Fragment
 
             case R.id.nav_favorites:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new CollectionViewFragment()).commit();
+                sendToGridView(favoritesCollectionArraylist, "favorites");
+
                 break;
 
             case R.id.nav_wishlist:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new CollectionViewFragment()).commit();
+                sendToGridView(wishlistCollectionArraylist, "wishlist");
+
                 break;
-            case R.id.extra1SideMenu: {
-                collectionName = "first";
-                CollectionViewFragment collectionViewFragment = new CollectionViewFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new CollectionViewFragment()).commit();
-            }
+
+            case R.id.extra1SideMenu:
+                sendToGridView(firstCollectionArraylist, "firstCollection");
+
                 break;
 
             case R.id.extra2SideMenu:
+                sendToGridView(secondCollectionArraylist, "secondCollection");
+
                 break;
 
             case R.id.extra3SideMenu:
+                sendToGridView(thirdCollectionArraylist, "thirdCollection");
+
                 break;
         }
 
@@ -209,49 +211,49 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         return true;
     }
 
-    // Opens the side navigation bar
-    public void onOpenPressed(View v) {
-            drawer.openDrawer(GravityCompat.START);
-    }
-
-    // Closes the side navigation bar
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START);
-        }
-        else{
-            super.onBackPressed();
-        }
-    }
-
-
-    /**
-     * This method will be called to minimize the on screen keyboard in the Activity
-     * When we get the current view, it is the view that has focus, which is the keyboard
-     * Credit - Found by Ram Dixit, 2019
-     *
-     * Source:  https://www.youtube.com/watch?v=CW5Xekqfx3I
-     */
-    private void closeKeyboard() {
-        View view = this.getCurrentFocus();     // view will refer to the keyboard
-        if (view != null ){                     // if there is a view that has focus
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    // implemented method from class CustomAdapter to navigate to new activity
-    // passes movie from position sent
-    @Override
-    public void onMovieClick(int position) {
-
-    }
-
-
-    public static SharedPreferences getSharedPreferences() {
-        return sharedPreferences;
-    }
+//    // Opens the side navigation bar
+//    public void onOpenPressed(View v) {
+//            drawer.openDrawer(GravityCompat.START);
+//    }
+//
+//    // Closes the side navigation bar
+//    @Override
+//    public void onBackPressed() {
+//        if (drawer.isDrawerOpen(GravityCompat.START)){
+//            drawer.closeDrawer(GravityCompat.START);
+//        }
+//        else{
+//            super.onBackPressed();
+//        }
+//    }
+//
+//
+//    /**
+//     * This method will be called to minimize the on screen keyboard in the Activity
+//     * When we get the current view, it is the view that has focus, which is the keyboard
+//     * Credit - Found by Ram Dixit, 2019
+//     *
+//     * Source:  https://www.youtube.com/watch?v=CW5Xekqfx3I
+//     */
+//    private void closeKeyboard() {
+//        View view = this.getCurrentFocus();     // view will refer to the keyboard
+//        if (view != null ){                     // if there is a view that has focus
+//            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//        }
+//    }
+//
+//    // implemented method from class CustomAdapter to navigate to new activity
+//    // passes movie from position sent
+//    @Override
+//    public void onMovieClick(int position) {
+//
+//    }
+//
+//
+//    public static SharedPreferences getSharedPreferences() {
+//        return sharedPreferences;
+//    }
 
     public void hideItem(ArrayList<String> extraMenuNames) {
         Menu nav_Menu = navigationView.getMenu();
@@ -302,6 +304,77 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         if (thirdCollectionArraylist == null) {
             thirdCollectionArraylist = new ArrayList<>();
         }
+    }
+
+    public static SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
+    public static ArrayList<MovieRecyclerView> getFavoritesCollectionArraylist(){
+        return favoritesCollectionArraylist;
+    }
+
+    public static ArrayList<MovieRecyclerView> getWishlistCollectionArraylist(){
+        return wishlistCollectionArraylist;
+    }
+
+    public static ArrayList<MovieRecyclerView> getFirstCollectionArraylist(){
+        return firstCollectionArraylist;
+    }
+
+    public static ArrayList<MovieRecyclerView> getSecondCollectionArraylist(){
+        return secondCollectionArraylist;
+    }
+
+    public static ArrayList<MovieRecyclerView> getThirdCollectionArraylist(){
+        return thirdCollectionArraylist;
+    }
+
+    // Opens the side navigation bar
+    public void onOpenPressed(View v) {
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    // Closes the side navigation bar
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else{
+            super.onBackPressed();
+        }
+    }
+
+    public void sendToGridView(ArrayList<MovieRecyclerView> list, String list_name){
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(list_name, list);
+
+        GridViewFragment nextFrag = new GridViewFragment();
+        nextFrag.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, nextFrag).commit();
+    }
+
+    /**
+     * This method will be called to minimize the on screen keyboard in the Activity
+     * When we get the current view, it is the view that has focus, which is the keyboard
+     * Credit - Found by Ram Dixit, 2019
+     *
+     * Source:  https://www.youtube.com/watch?v=CW5Xekqfx3I
+     */
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();     // view will refer to the keyboard
+        if (view != null ){                     // if there is a view that has focus
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    // implemented method from class CustomAdapter to navigate to new activity
+    // passes movie from position sent
+    @Override
+    public void onMovieClick(int position) {
+
     }
 
 }

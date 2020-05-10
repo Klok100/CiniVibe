@@ -10,6 +10,8 @@ import android.view.inputmethod.InputMethodManager;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private String name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void login(View v){
         Intent intent = new Intent(this, MainHomeScreenActivity.class);

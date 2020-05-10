@@ -21,16 +21,6 @@
             android:layout_height="match_parent">
 
 
-            <ListView
-                android:id="@+id/listViewGenres"
-                android:layout_width="531dp"
-                android:layout_height="350dp"
-                android:layout_marginTop="68dp"
-                android:entries="@array/Genres"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
             <TextView
                 android:id="@+id/nowShowingMoviesTitle"
                 android:layout_width="214dp"
@@ -44,17 +34,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
             <TextView
-                android:id="@+id/comingSoonMoviesTitle"
-                android:layout_width="214dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="96dp"
-                android:text="COMING SOON"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nowShowingRecyclerView" />
-
-            <TextView
                 android:id="@+id/seeAllNowShowing"
                 android:layout_width="80dp"
                 android:layout_height="24dp"
@@ -65,6 +44,26 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nowShowingRecyclerView"
+                android:layout_width="700dp"
+                android:layout_height="212dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nowShowingMoviesTitle" />
+
+            <TextView
+                android:id="@+id/comingSoonMoviesTitle"
+                android:layout_width="214dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="96dp"
+                android:text="COMING SOON"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nowShowingRecyclerView" />
 
             <TextView
                 android:id="@+id/seeAllComingSoon"
@@ -77,6 +76,15 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nowShowingRecyclerView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comingSoonRecyclerView"
+                android:layout_width="700dp"
+                android:layout_height="212dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comingSoonMoviesTitle" />
 
             <TextView
                 android:id="@+id/genresTitle"
@@ -109,23 +117,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/comingSoonRecyclerView"
                 tools:layout_editor_absoluteX="0dp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/nowShowingRecyclerView"
-                android:layout_width="700dp"
-                android:layout_height="212dp"
-                android:layout_marginTop="32dp"
+            <ListView
+                android:id="@+id/listViewGenres"
+                android:layout_width="531dp"
+                android:layout_height="350dp"
+                android:layout_marginTop="68dp"
+                android:entries="@array/Genres"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nowShowingMoviesTitle" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/comingSoonRecyclerView"
-                android:layout_width="700dp"
-                android:layout_height="212dp"
-                android:layout_marginTop="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/comingSoonMoviesTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
