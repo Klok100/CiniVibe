@@ -24,7 +24,11 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
     private ArrayList<MovieRecyclerView> horror;
     private ArrayList<MovieRecyclerView> comedy;
     private ArrayList<MovieRecyclerView> sci_fi;
-    private ArrayList<MovieRecyclerView> genre;
+    private ArrayList<MovieRecyclerView> favorites;
+    private ArrayList<MovieRecyclerView> wishlist;
+    private ArrayList<MovieRecyclerView> firstCollection;
+    private ArrayList<MovieRecyclerView> secondCollection;
+    private ArrayList<MovieRecyclerView> thirdCollection;
 
     @Nullable
     @Override
@@ -44,6 +48,12 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
         horror = bundle.getParcelableArrayList("horror");
         comedy = bundle.getParcelableArrayList("comedy");
         sci_fi = bundle.getParcelableArrayList("sci_fi");
+        favorites = bundle.getParcelableArrayList("favorites");
+        wishlist = bundle.getParcelableArrayList("wishlist");
+        firstCollection = bundle.getParcelableArrayList("firstCollection");
+        secondCollection = bundle.getParcelableArrayList("secondCollection");
+        thirdCollection = bundle.getParcelableArrayList("thirdCollection");
+
         MainHomeScreenActivity.genreCheck = true;
 
         final RecyclerView recyclerView = view.findViewById(R.id.rvNumbers);
@@ -85,10 +95,40 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
             MainHomeScreenActivity.genre = comedy;
         }
 
-        else {
+        else if (sci_fi != null){
             // passing onMovieListener interface to constructor of CustomAdapter
             adapter = new CustomAdapter(this.getContext(), sci_fi, this);
             MainHomeScreenActivity.genre = sci_fi;
+        }
+
+        else if (favorites != null){
+            // passing onMovieListener interface to constructor of CustomAdapter
+            adapter = new CustomAdapter(this.getContext(), favorites, this);
+            MainHomeScreenActivity.genre = favorites;
+        }
+
+        else if (wishlist != null){
+            // passing onMovieListener interface to constructor of CustomAdapter
+            adapter = new CustomAdapter(this.getContext(), wishlist, this);
+            MainHomeScreenActivity.genre = wishlist;
+        }
+
+        else if (firstCollection != null){
+            // passing onMovieListener interface to constructor of CustomAdapter
+            adapter = new CustomAdapter(this.getContext(), firstCollection, this);
+            MainHomeScreenActivity.genre = firstCollection;
+        }
+
+        else if (secondCollection != null){
+            // passing onMovieListener interface to constructor of CustomAdapter
+            adapter = new CustomAdapter(this.getContext(), secondCollection, this);
+            MainHomeScreenActivity.genre = secondCollection;
+        }
+
+        else {
+            // passing onMovieListener interface to constructor of CustomAdapter
+            adapter = new CustomAdapter(this.getContext(), thirdCollection, this);
+            MainHomeScreenActivity.genre = thirdCollection;
         }
 
         // recyclerView fills with each individual movie in a horizontal layout
@@ -139,20 +179,20 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
 
         int min = 0;
         MovieRecyclerView temp = null;
-        for (int i = 0; i < genre.size() - 1; i++)
+        for (int i = 0; i < MainHomeScreenActivity.genre.size() - 1; i++)
         {
             min = i;
-            for (int j = i + 1; j < genre.size(); j++)
+            for (int j = i + 1; j < MainHomeScreenActivity.genre.size(); j++)
             {
-                if (genre.get(min).getTitle().compareTo(genre.get(j).getTitle()) > 0)
+                if (MainHomeScreenActivity.genre.get(min).getTitle().compareTo(MainHomeScreenActivity.genre.get(j).getTitle()) > 0)
                 {
                     min = j;
                 }
             }
 
-            temp = genre.get(min);
-            genre.set(min, genre.get(i));
-            genre.set(i, temp);
+            temp = MainHomeScreenActivity.genre.get(min);
+            MainHomeScreenActivity.genre.set(min, MainHomeScreenActivity.genre.get(i));
+            MainHomeScreenActivity.genre.set(i, temp);
         }
     }
 
@@ -161,20 +201,20 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
 
         int min = 0;
         MovieRecyclerView temp = null;
-        for (int i = 0; i < genre.size() - 1; i++)
+        for (int i = 0; i < MainHomeScreenActivity.genre.size() - 1; i++)
         {
             min = i;
-            for (int j = i + 1; j < genre.size(); j++)
+            for (int j = i + 1; j < MainHomeScreenActivity.genre.size(); j++)
             {
-                if (genre.get(min).getRating() < genre.get(j).getRating())
+                if (MainHomeScreenActivity.genre.get(min).getRating() < MainHomeScreenActivity.genre.get(j).getRating())
                 {
                     min = j;
                 }
             }
 
-            temp = genre.get(min);
-            genre.set(min, genre.get(i));
-            genre.set(i, temp);
+            temp = MainHomeScreenActivity.genre.get(min);
+            MainHomeScreenActivity.genre.set(min, MainHomeScreenActivity.genre.get(i));
+            MainHomeScreenActivity.genre.set(i, temp);
         }
 
     }
@@ -183,20 +223,20 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
         int min = 0;
         MovieRecyclerView temp = null;
 
-        for (int i = 0; i < genre.size() - 1; i++)
+        for (int i = 0; i < MainHomeScreenActivity.genre.size() - 1; i++)
         {
             min = i;
-            for (int j = i + 1; j < genre.size(); j++)
+            for (int j = i + 1; j < MainHomeScreenActivity.genre.size(); j++)
             {
-                if (genre.get(min).getDateValue() < genre.get(j).getDateValue())
+                if (MainHomeScreenActivity.genre.get(min).getDateValue() < MainHomeScreenActivity.genre.get(j).getDateValue())
                 {
                     min = j;
                 }
             }
 
-            temp = genre.get(min);
-            genre.set(min, genre.get(i));
-            genre.set(i, temp);
+            temp = MainHomeScreenActivity.genre.get(min);
+            MainHomeScreenActivity.genre.set(min, MainHomeScreenActivity.genre.get(i));
+            MainHomeScreenActivity.genre.set(i, temp);
         }
     }
 
@@ -205,7 +245,7 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
 
         Bundle bundle = new Bundle();
         bundle.putParcelable("movie", MainHomeScreenActivity.genre.get(position));
-//        bundle.putBoolean("genreCheck", true);
+//      bundle.putBoolean("genreCheck", true);
 
         IndividualMovieFragment nextFrag = new IndividualMovieFragment();
         nextFrag.setArguments(bundle);

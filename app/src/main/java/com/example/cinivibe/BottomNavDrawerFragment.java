@@ -36,11 +36,16 @@ import static android.content.Context.MODE_PRIVATE;
 public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
 
     public static ArrayList<String> extraMenuNames;
+    public static ArrayList<MovieRecyclerView> favoritesCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> wishlistCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> firstCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> secondCollectionArraylist;
+    public static ArrayList<MovieRecyclerView> thirdCollectionArraylist;
+    public static SharedPreferences sharedPreferences;
+    public static MovieRecyclerView movie;
+    private static Context context = null;
     public NavigationView navigationView;
     public View view;
-    public static SharedPreferences sharedPreferences;
-    private static Context context = null;
-    public MovieRecyclerView movie;
     public boolean genreCheck;
 
     public BottomNavDrawerFragment() {
@@ -48,9 +53,7 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_bottom_nav_drawer, container, false);
 
@@ -74,6 +77,13 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
 
         hideItem(extraMenuNames, navigationView);
 
+        favoritesCollectionArraylist = MainHomeScreenActivity.getFavoritesCollectionArraylist();
+        wishlistCollectionArraylist = MainHomeScreenActivity.getWishlistCollectionArraylist();
+        firstCollectionArraylist = MainHomeScreenActivity.getFirstCollectionArraylist();
+        secondCollectionArraylist = MainHomeScreenActivity.getSecondCollectionArraylist();
+        thirdCollectionArraylist = MainHomeScreenActivity.getThirdCollectionArraylist();
+        movie = IndividualMovieFragment.getMovie();
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             // get object of menuItem selected
@@ -82,11 +92,35 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
 
                 switch (id) {
                     case R.id.favoritesMenu:
-                        Toast.makeText(getActivity(), "Open Favorites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Added to Favorites", Toast.LENGTH_SHORT).show();
+                        favoritesCollectionArraylist.add(movie);
+
                         break;
+
                     case R.id.wishlistMenu:
-                        Toast.makeText(getActivity(), "Open Wishlist", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Added to Wishlist", Toast.LENGTH_SHORT).show();
+                        wishlistCollectionArraylist.add(movie);
+
                         break;
+
+                    case R.id.extra1BottomMenu:
+                        Toast.makeText(getActivity(), "Added to " + extraMenuNames.get(0), Toast.LENGTH_SHORT).show();
+                        firstCollectionArraylist.add(movie);
+
+                        break;
+
+                    case R.id.extra2BottomMenu:
+                        Toast.makeText(getActivity(), "Added to " + extraMenuNames.get(1), Toast.LENGTH_SHORT).show();
+                        secondCollectionArraylist.add(movie);
+
+                        break;
+
+                    case R.id.extra3BottomMenu:
+                        Toast.makeText(getActivity(), "Added to " + extraMenuNames.get(2), Toast.LENGTH_SHORT).show();
+                        thirdCollectionArraylist.add(movie);
+
+                        break;
+
                     case R.id.addMenu:
                         Intent intent = new Intent(getActivity(), CustomPopupActivity.class);
                         intent.putExtra("moviePosition", MainHomeScreenActivity.movie);
@@ -148,7 +182,7 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
             Type type = new TypeToken<List<String>>() {
             }.getType();
             extraMenuNames = gson.fromJson(json, type);
-//            extraMenuNames.remove(0);
+            extraMenuNames.remove(0);
         }
 
     }

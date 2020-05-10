@@ -14,10 +14,6 @@
         android:entries="@array/Sorting"
         android:popupBackground="@color/black" />
 
-    <TextView
-        android:layout_width="370dp"
-        android:layout_height="179dp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNumbers"
         android:layout_width="match_parent"

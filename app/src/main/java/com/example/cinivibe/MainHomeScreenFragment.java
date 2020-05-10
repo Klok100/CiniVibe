@@ -21,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,8 +38,6 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
     private CustomAdapter sci_fi_adapter;
 
     private RequestQueue mQueue;
-    private int start = 0;
-    private int end = 32;
 
     private ArrayList<MovieRecyclerView> now_playing;
     private ArrayList<MovieRecyclerView> upcoming;
@@ -49,13 +46,19 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
     private ArrayList<MovieRecyclerView> horror;
     private ArrayList<MovieRecyclerView> comedy;
     private ArrayList<MovieRecyclerView> sci_fi;
-    private ArrayList<MovieRecyclerView> individual_movie;
+
+    private String poster_path;
+    private JSONArray genre_ids_JSON;
+    private String title;
+    private Double vote_average;
+    private String overview;
+    private String release_date;
+    private int[] genre_ids;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_main_home_screen, container, false);
-
     }
 
 
@@ -71,7 +74,6 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         horror = new ArrayList<>();
         comedy = new ArrayList<>();
         sci_fi = new ArrayList<>();
-        individual_movie = new ArrayList<>();
 
         // Initializes all of the adapters
         now_playing_adapter = new CustomAdapter(this.getContext(), now_playing, this);
@@ -102,63 +104,23 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                     public void onItemClick(AdapterView<?> listView,
                                             View itemView, int position, long id){
                         if (position == 0) {
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelableArrayList("action", action);
-
-                            GridViewFragment nextFrag = new GridViewFragment();
-                            nextFrag.setArguments(bundle);
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, nextFrag, "findThisFragment")
-                                    .addToBackStack(null)
-                                    .commit();
+                            sendToGridView(action, "action");
                         }
 
                         if (position == 1) {
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelableArrayList("romance", romance);
-
-                            GridViewFragment nextFrag = new GridViewFragment();
-                            nextFrag.setArguments(bundle);
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, nextFrag, "findThisFragment")
-                                    .addToBackStack(null)
-                                    .commit();
+                            sendToGridView(romance, "romance");
                         }
 
                         if (position == 2) {
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelableArrayList("horror", horror);
-
-                            GridViewFragment nextFrag = new GridViewFragment();
-                            nextFrag.setArguments(bundle);
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, nextFrag, "findThisFragment")
-                                    .addToBackStack(null)
-                                    .commit();
+                            sendToGridView(horror, "horror");
                         }
 
                         if (position == 3) {
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelableArrayList("comedy", comedy);
-
-                            GridViewFragment nextFrag = new GridViewFragment();
-                            nextFrag.setArguments(bundle);
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, nextFrag, "findThisFragment")
-                                    .addToBackStack(null)
-                                    .commit();
+                            sendToGridView(comedy, "comedy");
                         }
 
                         if (position == 4) {
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelableArrayList("sci_fi", sci_fi);
-
-                            GridViewFragment nextFrag = new GridViewFragment();
-                            nextFrag.setArguments(bundle);
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, nextFrag, "findThisFragment")
-                                    .addToBackStack(null)
-                                    .commit();
+                            sendToGridView(sci_fi, "sci_fi");
                         }
 
                     }
@@ -168,22 +130,13 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         ListView listView = (ListView) getView().findViewById(R.id.listViewGenres);
         listView.setOnItemClickListener(itemClickListener);
 
-
         TextView seeAllPassData = (TextView) view.findViewById(R.id.seeAllNowShowing);
 
         // Sets an onClickListener for whenever the user clicks on the See All button for Now Showing movies
         seeAllPassData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("now_playing", now_playing);
-
-                GridViewFragment nextFrag = new GridViewFragment();
-                nextFrag.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                sendToGridView(now_playing, "now_playing");
             }
 
         });
@@ -194,16 +147,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
         upcomingPassData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("upcoming", upcoming);
-
-                GridViewFragment nextFrag = new GridViewFragment();
-                nextFrag.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                sendToGridView(upcoming, "upcoming");
             }
 
         });
@@ -256,27 +200,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
                                 JSONObject movie = jsonArray.getJSONObject(i);
 
-                                Double popularity = movie.getDouble("popularity");
-                                int vote_count = movie.getInt("vote_count");
-                                Boolean video = movie.getBoolean("video");
-                                String poster_path = movie.getString("poster_path");
-                                int id = movie.getInt("id");
-                                JSONArray genre_ids_JSON = movie.optJSONArray("genre_ids");
-                                Boolean adult = movie.getBoolean("adult");
-                                String backdrop_path = movie.getString("backdrop_path");
-                                String original_language = movie.getString("original_language");
-                                String original_title = movie.getString("original_title");
-                                String title = movie.getString("title");
-                                Double vote_average = movie.getDouble("vote_average");
-                                String overview = movie.getString("overview");
-                                String release_date = movie.getString("release_date");
-
-
-                                int [] genre_ids = new int[genre_ids_JSON.length()];
-
-                                for (int j = 0; j < genre_ids_JSON.length(); j++) {
-                                    genre_ids[j] = genre_ids_JSON.optInt(j);
-                                }
+                                scrapeJSONData(movie);
 
                                 MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date, getDateValue(release_date));
 
@@ -370,26 +294,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
                                     JSONObject movie = jsonArray.getJSONObject(i);
 
-                                    Double popularity = movie.getDouble("popularity");
-                                    int vote_count = movie.getInt("vote_count");
-                                    Boolean video = movie.getBoolean("video");
-                                    String poster_path = movie.getString("poster_path");
-                                    int id = movie.getInt("id");
-                                    JSONArray genre_ids_JSON = movie.optJSONArray("genre_ids");
-                                    Boolean adult = movie.getBoolean("adult");
-                                    String backdrop_path = movie.getString("backdrop_path");
-                                    String original_language = movie.getString("original_language");
-                                    String original_title = movie.getString("original_title");
-                                    String title = movie.getString("title");
-                                    Double vote_average = movie.getDouble("vote_average");
-                                    String overview = movie.getString("overview");
-                                    String release_date = movie.getString("release_date");
-
-                                    int[] genre_ids = new int[genre_ids_JSON.length()];
-
-                                    for (int j = 0; j < genre_ids_JSON.length(); j++) {
-                                        genre_ids[j] = genre_ids_JSON.optInt(j);
-                                    }
+                                    scrapeJSONData(movie);
 
                                     String dateToday = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
@@ -402,7 +307,6 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                     }
 
                                 }
-
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -438,27 +342,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
                                     JSONObject movie = jsonArray.getJSONObject(i);
 
-                                    Double popularity = movie.getDouble("popularity");
-                                    int vote_count = movie.getInt("vote_count");
-                                    Boolean video = movie.getBoolean("video");
-                                    String poster_path = movie.getString("poster_path");
-                                    int id = movie.getInt("id");
-                                    JSONArray genre_ids_JSON = movie.optJSONArray("genre_ids");
-                                    Boolean adult = movie.getBoolean("adult");
-                                    String backdrop_path = movie.getString("backdrop_path");
-                                    String original_language = movie.getString("original_language");
-                                    String original_title = movie.getString("original_title");
-                                    String title = movie.getString("title");
-                                    Double vote_average = movie.getDouble("vote_average");
-                                    String overview = movie.getString("overview");
-                                    String release_date = movie.getString("release_date");
-
-                                    int [] genre_ids = new int[genre_ids_JSON.length()];
-
-                                    for (int j = 0; j < genre_ids_JSON.length(); j++) {
-                                        genre_ids[j] = genre_ids_JSON.optInt(j);
-                                    }
-
+                                    scrapeJSONData(movie);
 
                                     MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date, getDateValue(release_date));
 
@@ -517,6 +401,40 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
         list.add(moviePlaceHolder);
         list_adapter.notifyDataSetChanged();
+    }
+
+    public void sendToGridView(ArrayList<MovieRecyclerView> list, String list_name){
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(list_name, list);
+
+        GridViewFragment nextFrag = new GridViewFragment();
+        nextFrag.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void scrapeJSONData(JSONObject movie){
+        try {
+            poster_path = movie.getString("poster_path");
+            genre_ids_JSON = movie.optJSONArray("genre_ids");
+            title = movie.getString("title");
+            vote_average = movie.getDouble("vote_average");
+            overview = movie.getString("overview");
+            release_date = movie.getString("release_date");
+
+
+            genre_ids = new int[genre_ids_JSON.length()];
+
+            for (int j = 0; j < genre_ids_JSON.length(); j++) {
+                genre_ids[j] = genre_ids_JSON.optInt(j);
+            }
+        }
+
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

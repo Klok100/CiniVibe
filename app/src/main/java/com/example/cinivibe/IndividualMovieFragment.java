@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class IndividualMovieFragment extends Fragment {
 
-    private MovieRecyclerView movie;
+    public static MovieRecyclerView movie;
     private String image;
     private String title;
     private String description;
@@ -27,6 +27,7 @@ public class IndividualMovieFragment extends Fragment {
     private int [] genres;
     private float rating;
     private String releaseDate;
+    public static MovieRecyclerView moviePlaceHolder;
     private boolean genreCheck;
 
 //    public BottomNavDrawerFragment bottomNavFragment;
@@ -130,5 +131,9 @@ public class IndividualMovieFragment extends Fragment {
         });
 
 
+    }
+
+    public static MovieRecyclerView getMovie(){
+        return movie;
     }
 }
