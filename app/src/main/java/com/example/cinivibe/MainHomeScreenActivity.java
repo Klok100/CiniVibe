@@ -49,12 +49,13 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_screen);
-        movie = 0;
-        genreCheck = false;
         checkArraylists();
 
         individualMovieFragment = new IndividualMovieFragment();
+
+        // A SharedPreferences object points to a file containing key-value pairs and provides simple methods to read and write them
         sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+
         loadArraylist();
         updateArraylist();
 
@@ -93,12 +94,12 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new MainHomeScreenFragment()).commit();
         }
-
         else {
             moviePosition = intent.getIntExtra("moviePosition",0);
             Bundle bundle = new Bundle();
             if (genreCheck == true) {
                 bundle.putParcelableArrayList(genre.toString(), genre);
+                bundle.putBoolean("genreCheck", true);
 
                 GridViewFragment nextFrag = new GridViewFragment();
                 nextFrag.setArguments(bundle);
@@ -108,7 +109,7 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
                         .commit();
             }
             else {
-                bundle.putParcelable("movie", now_playing.get(moviePosition));
+                bundle.putParcelable("movie", now_playing.get(movie));
                 IndividualMovieFragment nextFrag = new IndividualMovieFragment();
                 nextFrag.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -118,6 +119,15 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
     }
 
     public void loadArraylist() {
+
+        /*
+        https://codinginflow.com/tutorials/android/save-arraylist-to-sharedpreferences-with-gson
+        * a way to store arraylists for each individual user
+        * GSON is a java API from Google that converts java objects to their JSON representations and vice-versa
+        * basically before you save java objects in SharedPreferences, you first need to convert the
+        * java objects into json string using gson which is a java library that saves java objects into
+        * their json representations. Then you save that string to the SharedPreferences object
+        */
 
         if (extraMenuNames == null) {
             extraMenuNames = new ArrayList<>();
@@ -129,21 +139,22 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
 
 
         if (json.isEmpty()) {
-            Toast.makeText(MainHomeScreenActivity.this,"There is something wrong",Toast.LENGTH_LONG).show();
         } else {
+            // specifies that you want gson to convert your json into a list of strings
             Type type = new TypeToken<List<String>>() {
             }.getType();
             List<String> arrPackageData = gson.fromJson(json, type);
             for (int i = 0; i < arrPackageData.size(); i++) {
                 extraMenuNames.set(i, arrPackageData.get(i));
             }
-            //extraMenuNames.remove(0);
+            if (extraMenuNames.get(0) == null) {
+                extraMenuNames.remove(0);
+            }
         }
 
     }
 
     public void updateArraylist() {
-
         extraMenuNames.add(getIntent().getStringExtra(this.EXTRA_NAME));
         Gson gson = new Gson();
         String json = gson.toJson(extraMenuNames);
@@ -209,6 +220,49 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
         return true;
     }
 
+//    // Opens the side navigation bar
+//    public void onOpenPressed(View v) {
+//            drawer.openDrawer(GravityCompat.START);
+//    }
+//
+//    // Closes the side navigation bar
+//    @Override
+//    public void onBackPressed() {
+//        if (drawer.isDrawerOpen(GravityCompat.START)){
+//            drawer.closeDrawer(GravityCompat.START);
+//        }
+//        else{
+//            super.onBackPressed();
+//        }
+//    }
+//
+//
+//    /**
+//     * This method will be called to minimize the on screen keyboard in the Activity
+//     * When we get the current view, it is the view that has focus, which is the keyboard
+//     * Credit - Found by Ram Dixit, 2019
+//     *
+//     * Source:  https://www.youtube.com/watch?v=CW5Xekqfx3I
+//     */
+//    private void closeKeyboard() {
+//        View view = this.getCurrentFocus();     // view will refer to the keyboard
+//        if (view != null ){                     // if there is a view that has focus
+//            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//        }
+//    }
+//
+//    // implemented method from class CustomAdapter to navigate to new activity
+//    // passes movie from position sent
+//    @Override
+//    public void onMovieClick(int position) {
+//
+//    }
+//
+//
+//    public static SharedPreferences getSharedPreferences() {
+//        return sharedPreferences;
+//    }
 
     public void hideItem(ArrayList<String> extraMenuNames) {
         Menu nav_Menu = navigationView.getMenu();
