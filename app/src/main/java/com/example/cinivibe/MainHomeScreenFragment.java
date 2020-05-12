@@ -156,11 +156,10 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
     // implemented method from class CustomAdapter to navigate to new activity
     // Passes the movie based on the position it was in from the Now Playing ArrayList
+    // https://www.youtube.com/watch?v=69C1ljfDvl0
     @Override
     public void onMovieClick(int position) {
         MainHomeScreenActivity.movie = position;
-//        int moviePosition = MainHomeScreenActivity.movie;
-//        moviePosition = position;
         Bundle bundle = new Bundle();
         bundle.putParcelable("movie", now_playing.get(position));
 

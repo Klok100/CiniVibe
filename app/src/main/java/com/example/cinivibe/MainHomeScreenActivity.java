@@ -28,7 +28,6 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
 
     // Creates a global drawer object
     private DrawerLayout drawer;
-    private CustomAdapter adapter;
     public static final String EXTRA_NAME = "name";
     public static ArrayList<String> extraMenuNames;
     public IndividualMovieFragment individualMovieFragment;
@@ -50,12 +49,13 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_screen);
-//        movie = 0;
-//        genreCheck = false;
         checkArraylists();
 
         individualMovieFragment = new IndividualMovieFragment();
+
+        // A SharedPreferences object points to a file containing key-value pairs and provides simple methods to read and write them
         sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+
         loadArraylist();
         updateArraylist();
 
@@ -120,6 +120,15 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
 
     public void loadArraylist() {
 
+        /*
+        https://codinginflow.com/tutorials/android/save-arraylist-to-sharedpreferences-with-gson
+        * a way to store arraylists for each individual user
+        * GSON is a java API from Google that converts java objects to their JSON representations and vice-versa
+        * basically before you save java objects in SharedPreferences, you first need to convert the
+        * java objects into json string using gson which is a java library that saves java objects into
+        * their json representations. Then you save that string to the SharedPreferences object
+        */
+
         if (extraMenuNames == null) {
             extraMenuNames = new ArrayList<>();
             sharedPreferences.edit().clear().apply();
@@ -130,8 +139,8 @@ public class MainHomeScreenActivity extends AppCompatActivity implements CustomA
 
 
         if (json.isEmpty()) {
-            Toast.makeText(MainHomeScreenActivity.this,"There is something wrong",Toast.LENGTH_LONG).show();
         } else {
+            // specifies that you want gson to convert your json into a list of strings
             Type type = new TypeToken<List<String>>() {
             }.getType();
             List<String> arrPackageData = gson.fromJson(json, type);

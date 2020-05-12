@@ -31,7 +31,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * https://www.youtube.com/watch?v=xzqTOtTiyAc
+ * explains how to create a bottom navigation drawer
+ *
  */
 public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
 
@@ -46,7 +48,6 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
     private static Context context = null;
     public NavigationView navigationView;
     public View view;
-    public boolean genreCheck;
 
     public BottomNavDrawerFragment() {
         // Required empty public constructor
@@ -55,8 +56,9 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_bottom_nav_drawer, container, false);
 
+        // need this line of code to be able to access the menu from the view
+        view = inflater.inflate(R.layout.fragment_bottom_nav_drawer, container, false);
         return view;
     }
 
@@ -64,10 +66,6 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Inflate the layout for this fragment
-
-//        Bundle bundle = this.getArguments();
-//        movie = bundle.getParcelable("movie");
-//        genreCheck = bundle.getBoolean("genreCheck");
 
         context = getActivity();
         sharedPreferences = MainHomeScreenActivity.getSharedPreferences();
@@ -122,12 +120,13 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
                         break;
 
                     case R.id.addMenu:
-                        Intent intent = new Intent(getActivity(), CustomPopupActivity.class);
-//                        intent.putExtra("moviePosition", MainHomeScreenActivity.movie);
-//                        if (genreCheck = true) {
-//                            intent.putExtra("genreCheck", genreCheck);
-//                        }
-                        startActivity(intent);
+                        if (extraMenuNames.size() == 3){
+                            Toast.makeText(context,"Reached maximum number of collections created. Delete one of existing collection.",Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Intent intent = new Intent(getActivity(), CustomPopupActivity.class);
+                            startActivity(intent);
+                        }
                         break;
                 }
 
@@ -176,13 +175,11 @@ public class BottomNavDrawerFragment extends BottomSheetDialogFragment {
 
         if (json.equalsIgnoreCase("[null]")) {
             System.out.println("rip");
-            Toast.makeText(context,"There is something wrong",Toast.LENGTH_LONG).show();
         } else {
 
             Type type = new TypeToken<List<String>>() {
             }.getType();
             extraMenuNames = gson.fromJson(json, type);
-//            extraMenuNames.remove(0);
         }
 
     }

@@ -23,17 +23,15 @@ import java.util.List;
 public class CustomPopupActivity extends AppCompatActivity {
 
     public EditText newCollectionName;
-    public static ArrayList<String> extraMenuNames;
-    public SharedPreferences sharedPreferences;
-    public int moviePosition;
-    public boolean genreCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_popup);
 
-
+        /*https://www.youtube.com/watch?v=eX-TdY6bLdg
+        * shows to create a custom pop up and includes animation
+        */
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -59,7 +57,6 @@ public class CustomPopupActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainHomeScreenActivity.class);
         intent.putExtra(MainHomeScreenActivity.EXTRA_NAME, name);
         intent.putExtra("individualMovieFrag", "individualMovieFrag");
-//        intent.putExtra("moviePosition",moviePosition);
         startActivity(intent);
     }
 

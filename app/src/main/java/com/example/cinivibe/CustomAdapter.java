@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> implements Filterable {
@@ -27,7 +25,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     private ArrayList<MovieRecyclerView> items;
     private ArrayList<MovieRecyclerView> searchItems;
     private OnMovieListener mOnMovieListener;
-    ImageView tempImage;
 
     public CustomAdapter(Context context, ArrayList<MovieRecyclerView> items, OnMovieListener mOnMovieListener) {
         this.context = context;

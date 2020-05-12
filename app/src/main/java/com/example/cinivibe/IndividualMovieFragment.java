@@ -27,10 +27,6 @@ public class IndividualMovieFragment extends Fragment {
     private int [] genres;
     private float rating;
     private String releaseDate;
-    public static MovieRecyclerView moviePlaceHolder;
-    private boolean genreCheck;
-
-//    public BottomNavDrawerFragment bottomNavFragment;
 
     @Nullable
     @Override
@@ -47,7 +43,6 @@ public class IndividualMovieFragment extends Fragment {
 
         // Gets individual movie data
         movie = bundle.getParcelable("movie");
-//        genreCheck = bundle.getBoolean("genreCheck");
 
         // Gets movie title and description
         image = "https://image.tmdb.org/t/p/w185/" + movie.getImage();
@@ -108,6 +103,7 @@ public class IndividualMovieFragment extends Fragment {
         releaseDateView.setText(releaseDate);
 
 
+//        https://guides.codepath.com/android/floating-action-buttons
         final FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {

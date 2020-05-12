@@ -38,6 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newCollectionTextView" />
 
+    <!--        https://stackoverflow.com/questions/23358822/how-to-custom-switch-button-->
     <RadioGroup
         android:id="@+id/privacyRadioGroup"
         android:layout_width="180dp"
