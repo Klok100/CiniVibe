@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BottomNavDrawerFragment">
-<!--    style="@style/AppTheme.NavDrawerTextSize">-->
+    <!--    style="@style/AppTheme.NavDrawerTextSize">-->
 
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.navigation.NavigationView

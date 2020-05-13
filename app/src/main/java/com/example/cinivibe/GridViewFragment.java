@@ -29,7 +29,6 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
     private ArrayList<MovieRecyclerView> firstCollection;
     private ArrayList<MovieRecyclerView> secondCollection;
     private ArrayList<MovieRecyclerView> thirdCollection;
-    private ArrayList<MovieRecyclerView> genre;
 
     @Nullable
     @Override
@@ -67,37 +66,43 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
         if (now_playing != null){
             // passing onMovieListener interface to constructor of CustomAdapter
             adapter = new CustomAdapter(this.getContext(), now_playing, this);
-            genre = now_playing;
+            MainHomeScreenActivity.genre = now_playing;
         }
 
         else if (upcoming != null){
             // passing onMovieListener interface to constructor of CustomAdapter
             adapter = new CustomAdapter(this.getContext(), upcoming, this);
-            genre = upcoming;
+            MainHomeScreenActivity.genre = upcoming;
         }
 
         else if (action != null){
             // passing onMovieListener interface to constructor of CustomAdapter
             adapter = new CustomAdapter(this.getContext(), action, this);
-            genre = action;
+            MainHomeScreenActivity.genre = action;
         }
 
         else if (romance != null){
             // passing onMovieListener interface to constructor of CustomAdapter
             adapter = new CustomAdapter(this.getContext(), romance, this);
-            genre = romance;
+            MainHomeScreenActivity.genre = romance;
         }
 
         else if (horror != null){
             // passing onMovieListener interface to constructor of CustomAdapter
             adapter = new CustomAdapter(this.getContext(), horror, this);
-            genre = horror;
+            MainHomeScreenActivity.genre = horror;
         }
 
         else if (comedy != null){
             // passing onMovieListener interface to constructor of CustomAdapter
             adapter = new CustomAdapter(this.getContext(), comedy, this);
-            genre = comedy;
+            MainHomeScreenActivity.genre = comedy;
+        }
+
+        else if (sci_fi != null){
+            // passing onMovieListener interface to constructor of CustomAdapter
+            adapter = new CustomAdapter(this.getContext(), sci_fi, this);
+            MainHomeScreenActivity.genre = sci_fi;
         }
 
         else if (favorites != null){
@@ -124,18 +129,11 @@ public class GridViewFragment extends Fragment implements CustomAdapter.OnMovieL
             MainHomeScreenActivity.genre = secondCollection;
         }
 
-        else if (thirdCollection != null){
+        else {
             // passing onMovieListener interface to constructor of CustomAdapter
             adapter = new CustomAdapter(this.getContext(), thirdCollection, this);
             MainHomeScreenActivity.genre = thirdCollection;
         }
-        else {
-            // passing onMovieListener interface to constructor of CustomAdapter
-            adapter = new CustomAdapter(this.getContext(), sci_fi, this);
-            genre = sci_fi;
-        }
-
-        MainHomeScreenActivity.genre = genre;
 
         // recyclerView fills with each individual movie in a horizontal layout
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 4, RecyclerView.VERTICAL, false));

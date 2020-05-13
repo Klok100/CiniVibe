@@ -203,9 +203,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
                                 MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date, getDateValue(release_date));
 
-
-                                now_playing.add(moviePlaceHolder);
-                                now_playing_adapter.notifyDataSetChanged();
+                                checkDupes(now_playing, now_playing_adapter, title, moviePlaceHolder);
 
                                 /** GENRES BY NUMBER (Genre List: https://api.themoviedb.org/3/genre/movie/list?api_key=3e71659358fcc0e15a078ffbfd22b2fc&language=en-US)
                                  *
@@ -234,28 +232,23 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
                                 // Sorts the movies into the different genre ArrayLists
                                 for (int j = 0; j < genre_ids_JSON.length(); j++){
                                     if (genre_ids[j] == 28){
-                                        action.add(moviePlaceHolder);
-                                        action_adapter.notifyDataSetChanged();
+                                        checkDupes(action, action_adapter, title, moviePlaceHolder);
                                     }
 
                                     if (genre_ids[j] == 10749){
-                                        romance.add(moviePlaceHolder);
-                                        romance_adapter.notifyDataSetChanged();
+                                        checkDupes(romance, romance_adapter, title, moviePlaceHolder);
                                     }
 
                                     if (genre_ids[j] == 27){
-                                        horror.add(moviePlaceHolder);
-                                        horror_adapter.notifyDataSetChanged();
+                                        checkDupes(horror, horror_adapter, title, moviePlaceHolder);
                                     }
 
                                     if (genre_ids[j] == 35){
-                                        comedy.add(moviePlaceHolder);
-                                        comedy_adapter.notifyDataSetChanged();
+                                        checkDupes(comedy, comedy_adapter, title, moviePlaceHolder);
                                     }
 
                                     if (genre_ids[j] == 878){
-                                        sci_fi.add(moviePlaceHolder);
-                                        sci_fi_adapter.notifyDataSetChanged();
+                                        checkDupes(sci_fi, sci_fi_adapter, title, moviePlaceHolder);
                                     }
                                 }
                             }
@@ -301,8 +294,7 @@ public class MainHomeScreenFragment extends Fragment implements CustomAdapter.On
 
                                         MovieRecyclerView moviePlaceHolder = new MovieRecyclerView(poster_path, title, overview, genre_ids, vote_average, release_date, getDateValue(release_date));
 
-                                        upcoming.add(moviePlaceHolder);
-                                        upcoming_adapter.notifyDataSetChanged();
+                                        checkDupes(upcoming, upcoming_adapter, title, moviePlaceHolder);
                                     }
 
                                 }

@@ -53,7 +53,7 @@
                     android:layout_width="70dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="3dp"
-                    android:layout_marginEnd="75dp"
+                    android:layout_marginEnd="24dp"
                     android:layout_marginBottom="3dp"
                     android:background="@drawable/home_button"
                     android:onClick="onHomeClick"

@@ -1,6 +1,7 @@
 package com.example.cinivibe;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,10 +45,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 
         holder.itemTitle.setText(items.get(position).getTitle());
-        //Picasso.with(context).load(items.get(position).getImage()).into(tempImage);
 
-        //Uri uri =  Uri.parse(items.get(position).getImage());
-        //holder.itemImage.setImageResource(tempImage);
+        holder.itemImage.setImageResource(R.drawable.cinivibe_logo);
+
     }
 
     @Override

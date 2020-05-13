@@ -30,8 +30,8 @@ public class CustomPopupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_custom_popup);
 
         /*https://www.youtube.com/watch?v=eX-TdY6bLdg
-        * shows to create a custom pop up and includes animation
-        */
+         * shows to create a custom pop up and includes animation
+         */
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
